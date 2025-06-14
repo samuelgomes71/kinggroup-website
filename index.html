@@ -1,1 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingGroup - Portal Oficial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header com aviso de desenvolvimento -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/logo-king.png" alt="KingGroup" class="logo">
+                <span class="brand-name">KingGroup</span>
+            </div>
+            <div class="development-notice">
+                <span class="notice-icon">🚧</span>
+                <span class="notice-text">Site em Desenvolvimento!</span>
+                <span class="notice-detail">Acesso restrito para testadores autorizados</span>
+            </div>
+            <div class="system-status">
+                <span class="status-indicator"></span>
+                <span class="status-text">Sistema ativo</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Container principal -->
+    <div class="main-container">
+        <!-- Sidebar de navegação -->
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-page="home">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Início</span>
+                    </li>
+                    <li class="nav-item nav-group">
+                        <span class="nav-icon">📱</span>
+                        <span class="nav-text">Aplicativos</span>
+                        <span class="nav-arrow">▼</span>
+                    </li>
+                    <ul class="nav-submenu">
+                        <li class="nav-subitem" data-page="kingroad">
+                            <span class="nav-icon">🗺️</span>
+                            <span class="nav-text">KingRoad</span>
+                            <span class="nav-badge">GPS</span>
+                        </li>
+                        <li class="nav-subitem" data-page="kingmusic">
+                            <span class="nav-icon">🎵</span>
+                            <span class="nav-text">KingMusic</span>
+                            <span class="nav-badge">Player</span>
+                        </li>
+                        <li class="nav-subitem" data-page="kinghinario">
+                            <span class="nav-icon">📖</span>
+                            <span class="nav-text">KingHinário CCB</span>
+                            <span class="nav-badge">Hinários</span>
+                        </li>
+                        <li class="nav-subitem" data-page="kingjob">
+                            <span class="nav-icon">💼</span>
+                            <span class="nav-text">KingJob</span>
+                            <span class="nav-badge">Trabalho</span>
+                        </li>
+                        <li class="nav-subitem" data-page="kingtuner">
+                            <span class="nav-icon">🎸</span>
+                            <span class="nav-text">KingTuner</span>
+                            <span class="nav-badge">Afinador</span>
+                        </li>
+                        <li class="nav-subitem" data-page="kingscan">
+                            <span class="nav-icon">📷</span>
+                            <span class="nav-text">KingScan</span>
+                            <span class="nav-badge">Scanner</span>
+                        </li>
+                    </ul>
+                    <li class="nav-item" data-page="stats">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Estatísticas</span>
+                    </li>
+                    <li class="nav-item" data-page="about">
+                        <span class="nav-icon">ℹ️</span>
+                        <span class="nav-text">Sobre</span>
+                    </li>
+                    <li class="nav-item" data-page="contact">
+                        <span class="nav-icon">📞</span>
+                        <span class="nav-text">Contato</span>
+                    </li>
+                    <li class="nav-item" data-page="admin">
+                        <span class="nav-icon">👑</span>
+                        <span class="nav-text">Admin</span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Área de conteúdo principal -->
+        <main class="content-area">
+            <!-- Página Inicial -->
+            <div id="home" class="page active">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">KingGroup</h1>
+                        <h2 class="hero-subtitle">Família Completa de Aplicativos Inteligentes</h2>
+                        <p class="hero-description">
+                            Descubra a mais avançada família de aplicativos do mercado. 
+                            Soluções inovadoras para GPS, música, trabalho, scanner e muito mais. 
+                            Tecnologia de ponta ao seu alcance.
+                        </p>
+                        <div class="hero-actions">
+                            <button class="btn btn-primary" onclick="showPage('apps' )">
+                                <span class="btn-icon">📱</span>
+                                Explorar Apps
+                            </button>
+                            <button class="btn btn-secondary" onclick="showPage('about')">
+                                <span class="btn-icon">ℹ️</span>
+                                Saiba Mais
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="apps-grid">
+                    <h3 class="section-title">Família King - 6 Apps Revolucionários</h3>
+                    <p class="section-subtitle">Cada aplicativo desenvolvido com tecnologia de ponta e funcionalidades únicas</p>
+                    
+                    <div class="grid">
+                        <div class="app-card" data-app="kingroad">
+                            <div class="app-header">
+                                <div class="app-icon">🗺️</div>
+                                <div class="app-status ready">✅ Pronto</div>
+                            </div>
+                            <div class="app-info">
+                                <h4 class="app-name">KingRoad</h4>
+                                <span class="app-version">v2.1.0</span>
+                                <p class="app-category">GPS Inteligente</p>
+                                <p class="app-description">Sistema de navegação revolucionário para caminhões com mapas offline.</p>
+                            </div>
+                            <div class="app-features">
+                                <span class="feature-tag">🚛 Caminhões</span>
+                                <span class="feature-tag">🗺️ Offline</span>
+                                <span class="feature-tag">🌙 Visão Noturna</span>
+                            </div>
+                            <button class="btn btn-app" onclick="downloadAPK('kingroad')">📱 Download APK</button>
+                            <button class="btn btn-secondary" onclick="showPage('kingroad')">ℹ️ Ver Detalhes</button>
+                        </div>
+
+                        <div class="app-card" data-app="kingmusic">
+                            <div class="app-header">
+                                <div class="app-icon">🎵</div>
+                                <div class="app-status development">🔧 Desenvolvimento</div>
+                            </div>
+                            <div class="app-info">
+                                <h4 class="app-name">KingMusic</h4>
+                                <span class="app-version">v1.8.0</span>
+                                <p class="app-category">Player Musical</p>
+                                <p class="app-description">Player avançado com scanner de partituras e OCR musical.</p>
+                            </div>
+                            <div class="app-features">
+                                <span class="feature-tag">🎼 Partituras</span>
+                                <span class="feature-tag">🎨 OCR Musical</span>
+                                <span class="feature-tag">✍️ Manuscritos</span>
+                            </div>
+                            <button class="btn btn-app" onclick="downloadAPK('kingmusic')">📱 Download APK</button>
+                            <button class="btn btn-secondary" onclick="showPage('kingmusic')">ℹ️ Ver Detalhes</button>
+                        </div>
+
+                        <div class="app-card" data-app="kinghinario">
+                            <div class="app-header">
+                                <div class="app-icon">📖</div>
+                                <div class="app-status development">🔧 Desenvolvimento</div>
+                            </div>
+                            <div class="app-info">
+                                <h4 class="app-name">KingHinário CCB</h4>
+                                <span class="app-version">v1.5.0</span>
+                                <p class="app-category">Hinários Digitais</p>
+                                <p class="app-description">Hinários digitais da CCB com busca avançada e detecção de voz.</p>
+                            </div>
+                            <div class="app-features">
+                                <span class="feature-tag">📚 CCB</span>
+                                <span class="feature-tag">🎤 Detecção Voz</span>
+                                <span class="feature-tag">🔍 Busca Avançada</span>
+                            </div>
+                            <button class="btn btn-app" onclick="downloadAPK('kinghinario')">📱 Download APK</button>
+                            <button class="btn btn-secondary" onclick="showPage('kinghinario')">ℹ️ Ver Detalhes</button>
+                        </div>
+
+                        <div class="app-card" data-app="kingjob">
+                            <div class="app-header">
+                                <div class="app-icon">💼</div>
+                                <div class="app-status development">🔧 Desenvolvimento</div>
+                            </div>
+                            <div class="app-info">
+                                <h4 class="app-name">KingJob</h4>
+                                <span class="app-version">v1.2.0</span>
+                                <p class="app-category">Plataforma de Trabalho</p>
+                                <p class="app-description">Plataforma completa para busca de empregos e gestão de carreira.</p>
+                            </div>
+                            <div class="app-features">
+                                <span class="feature-tag">💼 Empregos</span>
+                                <span class="feature-tag">📸 Selfie Pro</span>
+                                <span class="feature-tag">🚛 Motoristas</span>
+                            </div>
+                            <button class="btn btn-app" onclick="downloadAPK('kingjob')">📱 Download APK</button>
+                            <button class="btn btn-secondary" onclick="showPage('kingjob')">ℹ️ Ver Detalhes</button>
+                        </div>
+
+                        <div class="app-card" data-app="kingtuner">
+                            <div class="app-header">
+                                <div class="app-icon">🎸</div>
+                                <div class="app-status development">🔧 Desenvolvimento</div>
+                            </div>
+                            <div class="app-info">
+                                <h4 class="app-name">KingTuner</h4>
+                                <span class="app-version">v1.0.0</span>
+                                <p class="app-category">Afinador Musical</p>
+                                <p class="app-description">Afinador cromático profissional com metrônomo integrado.</p>
+                            </div>
+                            <div class="app-features">
+                                <span class="feature-tag">🎵 Cromático</span>
+                                <span class="feature-tag">🥁 Metrônomo</span>
+                                <span class="feature-tag">🎸 Multi-instrumentos</span>
+                            </div>
+                            <button class="btn btn-app" onclick="downloadAPK('kingtuner')">📱 Download APK</button>
+                            <button class="btn btn-secondary" onclick="showPage('kingtuner')">ℹ️ Ver Detalhes</button>
+                        </div>
+
+                        <div class="app-card" data-app="kingscan">
+                            <div class="app-header">
+                                <div class="app-icon">📷</div>
+                                <div class="app-status development">🔧 Desenvolvimento</div>
+                            </div>
+                            <div class="app-info">
+                                <h4 class="app-name">KingScan</h4>
+                                <span class="app-version">v2.0.0</span>
+                                <p class="app-category">Scanner Inteligente</p>
+                                <p class="app-description">Scanner inteligente com IA avançada e OCR profissional.</p>
+                            </div>
+                            <div class="app-features">
+                                <span class="feature-tag">🤖 IA Avançada</span>
+                                <span class="feature-tag">📄 OCR Pro</span>
+                                <span class="feature-tag">🎼 Partituras</span>
+                            </div>
+                            <button class="btn btn-app" onclick="downloadAPK('kingscan')">📱 Download APK</button>
+                            <button class="btn btn-secondary" onclick="showPage('kingscan')">ℹ️ Ver Detalhes</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Páginas individuais dos apps serão carregadas dinamicamente -->
+            <div id="kingroad" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="kingmusic" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="kinghinario" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="kingjob" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="kingtuner" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="kingscan" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="stats" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="about" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="contact" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+
+            <div id="admin" class="page">
+                <!-- Conteúdo será carregado via JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script src="js/apps-data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/content-loader.js"></script>
+    <script src="js/api-manager.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
 
