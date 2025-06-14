@@ -1,2 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingGroup - Portal Oficial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #d4af37 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #d4af37, #8b4513);
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+
+        .development-notice {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .notice-text {
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-text {
+            font-size: 0.875rem;
+            color: #10b981;
+        }
+
+        .main-container {
+            display: flex;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(44, 44, 44, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 2rem 0;
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-content {
+            padding: 0 1.5rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 69, 19, 0.2));
+            border-left: 3px solid #d4af37;
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-text {
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .nav-submenu {
+            list-style: none;
+            margin-left: 1rem;
+            border-left: 2px solid rgba(212, 175, 55, 0.2);
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .nav-subitem {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 0.75rem;
+            margin-bottom: 0.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .nav-subitem:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .nav-badge {
+            background: linear-gradient(135deg, #d4af37, #8b4513);
+            color: #1a1a1a;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+        }
+
+        .content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #d4af37, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #e5e5e5;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #8b4513);
+            color: #1a1a1a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .app-card {
+            background: rgba(44, 44, 44, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #d4af37, #8b4513);
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #d4af37, #8b4513);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .app-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 0.25rem;
+        }
+
+        .app-category {
+            font-size: 0.875rem;
+            color: #a0a0a0;
+        }
+
+        .app-description {
+            color: #e5e5e5;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-ready {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-development {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <span class="brand-name">KingGroup</span>
+            </div>
+            <div class="development-notice">
+                <span>🚧</span>
+                <span class="notice-text">Site em Desenvolvimento!</span>
+            </div>
+            <div class="system-status">
+                <span class="status-indicator"></span>
+                <span class="status-text">Sistema ativo</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav-menu">
+                    <li class="nav-item active">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Início</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-icon">📱</span>
+                        <span class="nav-text">Aplicativos</span>
+                    </li>
+                    <ul class="nav-submenu">
+                        <li class="nav-subitem">
+                            <span class="nav-icon">🗺️</span>
+                            <span class="nav-text">KingRoad</span>
+                            <span class="nav-badge">GPS</span>
+                        </li>
+                        <li class="nav-subitem">
+                            <span class="nav-icon">🎵</span>
+                            <span class="nav-text">KingMusic</span>
+                            <span class="nav-badge">Player</span>
+                        </li>
+                        <li class="nav-subitem">
+                            <span class="nav-icon">📖</span>
+                            <span class="nav-text">KingHinário CCB</span>
+                            <span class="nav-badge">Hinários</span>
+                        </li>
+                        <li class="nav-subitem">
+                            <span class="nav-icon">💼</span>
+                            <span class="nav-text">KingJob</span>
+                            <span class="nav-badge">Empregos</span>
+                        </li>
+                        <li class="nav-subitem">
+                            <span class="nav-icon">🎸</span>
+                            <span class="nav-text">KingTuner</span>
+                            <span class="nav-badge">Afinador</span>
+                        </li>
+                        <li class="nav-subitem">
+                            <span class="nav-icon">📱</span>
+                            <span class="nav-text">KingScan</span>
+                            <span class="nav-badge">Scanner</span>
+                        </li>
+                    </ul>
+                    <li class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Estatísticas</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-icon">ℹ️</span>
+                        <span class="nav-text">Sobre</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-icon">📞</span>
+                        <span class="nav-text">Contato</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">Admin</span>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="content">
+            <div class="hero-section">
+                <h1 class="hero-title">Família Completa de Aplicativos Inteligentes</h1>
+                <p class="hero-subtitle">Descubra soluções inovadoras para GPS, música, hinários, empregos e muito mais</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">
+                        📱 Explorar Apps
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        ℹ️ Saiba Mais
+                    </a>
+                </div>
+            </div>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🗺️</div>
+                        <div class="app-info">
+                            <h3>KingRoad</h3>
+                            <p class="app-category">GPS Inteligente</p>
+                        </div>
+                    </div>
+                    <div class="app-status status-ready">
+                        ✅ Pronto para uso
+                    </div>
+                    <p class="app-description">
+                        Sistema de navegação revolucionário para caminhões com mapas offline, 
+                        rotas otimizadas e visão noturna avançada.
+                    </p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary btn-small">📱 Download</a>
+                        <a href="#" class="btn btn-secondary btn-small">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎵</div>
+                        <div class="app-info">
+                            <h3>KingMusic</h3>
+                            <p class="app-category">Player Musical</p>
+                        </div>
+                    </div>
+                    <div class="app-status status-development">
+                        🔧 Em desenvolvimento
+                    </div>
+                    <p class="app-description">
+                        Player avançado com scanner de partituras, OCR musical e 
+                        reconhecimento de manuscritos musicais.
+                    </p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary btn-small">📱 Download</a>
+                        <a href="#" class="btn btn-secondary btn-small">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📖</div>
+                        <div class="app-info">
+                            <h3>KingHinário CCB</h3>
+                            <p class="app-category">Hinários Digitais</p>
+                        </div>
+                    </div>
+                    <div class="app-status status-development">
+                        🔧 Em desenvolvimento
+                    </div>
+                    <p class="app-description">
+                        Hinários digitais da CCB com busca avançada, detecção de voz 
+                        e sincronização automática.
+                    </p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary btn-small">📱 Download</a>
+                        <a href="#" class="btn btn-secondary btn-small">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">💼</div>
+                        <div class="app-info">
+                            <h3>KingJob</h3>
+                            <p class="app-category">Plataforma de Empregos</p>
+                        </div>
+                    </div>
+                    <div class="app-status status-development">
+                        🔧 Em desenvolvimento
+                    </div>
+                    <p class="app-description">
+                        Plataforma completa para busca de empregos com foco em motoristas 
+                        e sistema de selfie profissional.
+                    </p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary btn-small">📱 Download</a>
+                        <a href="#" class="btn btn-secondary btn-small">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">🎸</div>
+                        <div class="app-info">
+                            <h3>KingTuner</h3>
+                            <p class="app-category">Afinador Musical</p>
+                        </div>
+                    </div>
+                    <div class="app-status status-development">
+                        🔧 Em desenvolvimento
+                    </div>
+                    <p class="app-description">
+                        Afinador cromático profissional com metrônomo integrado 
+                        e suporte para múltiplos instrumentos.
+                    </p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary btn-small">📱 Download</a>
+                        <a href="#" class="btn btn-secondary btn-small">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon">📱</div>
+                        <div class="app-info">
+                            <h3>KingScan</h3>
+                            <p class="app-category">Scanner Inteligente</p>
+                        </div>
+                    </div>
+                    <div class="app-status status-development">
+                        🔧 Em desenvolvimento
+                    </div>
+                    <p class="app-description">
+                        Scanner inteligente com IA avançada, OCR profissional 
+                        e reconhecimento de partituras musicais.
+                    </p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary btn-small">📱 Download</a>
+                        <a href="#" class="btn btn-secondary btn-small">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
 
          
