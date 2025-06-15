@@ -1,1016 +1,1181 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>KingGroup - Portal Oficial</title>
- <style>
- * { margin: 0; padding: 0; box-sizing: border-box; }
- body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #d4af37 100%); color: #ffffff; min-height: 100vh; overflow-x: hidden; }
- .header { background: rgba(26, 26, 26, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
- .header-content { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
- .logo-section { display: flex; align-items: center; gap: 0.75rem; }
- .logo { width: 40px; height: 40px; background: linear-gradient(135deg, #d4af37, #f4d03f); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; color: #1a1a1a; }
- .brand-text { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #d4af37, #f4d03f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
- .nav-actions { display: flex; gap: 1rem; align-items: center; }
- .btn { padding: 0.5rem 1rem; border: none; border-radius: 6px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
- .btn-primary { background: linear-gradient(135deg, #d4af37, #f4d03f); color: #1a1a1a; }
- .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
- .btn-secondary { background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
- .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
- .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
- .main-content { margin-top: 80px; padding: 2rem 0; }
- .hero { text-align: center; padding: 4rem 0; }
- .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, #d4af37, #f4d03f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
- .hero p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; }
- .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0; }
- .app-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 2rem; transition: all 0.3s ease; }
- .app-card:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); }
- .app-icon { font-size: 3rem; margin-bottom: 1rem; }
- .app-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #d4af37; }
- .app-subtitle { font-size: 1rem; opacity: 0.8; margin-bottom: 1rem; }
- .app-status { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1rem; }
- .status-ready { background: rgba(76, 175, 80, 0.2); color: #4CAF50; border: 1px solid rgba(76, 175, 80, 0.3); }
- .status-dev { background: rgba(255, 193, 7, 0.2); color: #FFC107; border: 1px solid rgba(255, 193, 7, 0.3); }
- .app-description { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.5rem; line-height: 1.5; }
- .app-actions { display: flex; gap: 0.75rem; }
- .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px); background: rgba(26, 26, 26, 0.95); backdrop-filter: blur(10px); border-right: 1px solid rgba(212, 175, 55, 0.3); padding: 2rem 0; z-index: 999; }
- .sidebar-menu { list-style: none; }
- .sidebar-menu li { margin-bottom: 0.5rem; }
- .sidebar-menu a { display: block; padding: 0.75rem 2rem; color: #ffffff; text-decoration: none; transition: all 0.3s ease; border-left: 3px solid transparent; }
- .sidebar-menu a:hover, .sidebar-menu a.active { background: rgba(212, 175, 55, 0.1); border-left-color: #d4af37; color: #d4af37; }
- .content-area { margin-left: 250px; }
- .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); }
- .modal-content { background: linear-gradient(135deg, #1a1a1a, #2c2c2c); margin: 5% auto; padding: 0; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid rgba(212, 175, 55, 0.3); }
- .modal-header { background: linear-gradient(135deg, #d4af37, #f4d03f); color: #1a1a1a; padding: 1rem 1.5rem; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; }
- .modal-body { padding: 2rem 1.5rem; }
- .close { color: #1a1a1a; font-size: 28px; font-weight: bold; cursor: pointer; }
- .close:hover { opacity: 0.7; }
- .tabs { display: flex; margin-bottom: 1.5rem; border-radius: 8px; overflow: hidden; }
- .tab { flex: 1; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); color: #ffffff; border: none; cursor: pointer; transition: all 0.3s ease; }
- .tab.active { background: linear-gradient(135deg, #d4af37, #f4d03f); color: #1a1a1a; }
- .form-group { margin-bottom: 1rem; }
- .form-group label { display: block; margin-bottom: 0.5rem; color: #d4af37; font-weight: 500; }
- .form-group input { width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: #ffffff; font-size: 1rem; }
- .form-group input:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2); }
- .password-field { position: relative; }
- .password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #d4af37; cursor: pointer; font-size: 1.2rem; }
- .forgot-password { text-align: center; margin-top: 1rem; }
- .forgot-password a { color: #d4af37; text-decoration: none; font-size: 0.9rem; }
- .forgot-password a:hover { text-decoration: underline; }
- /* Dashboard Styles */
- .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #333; }
- .tab-button { background: #2a2a2a; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px 5px 0 0; transition: all 0.3s; }
- .tab-button:hover { background: #3a3a3a; }
- .tab-button.active { background: #d4af37; color: #000; }
- .tab-content { display: none; padding: 20px 0; }
- .tab-content.active { display: block; }
- .form-group { margin-bottom: 15px; }
- .form-group label { display: block; margin-bottom: 5px; color: #d4af37; font-weight: bold; }
- .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: #2a2a2a; color: #fff; }
- .form-group small { color: #888; font-size: 0.8rem; }
- .form-row { display: flex; gap: 15px; }
- .form-row .form-group { flex: 1; }
- .invite-section { background: #2a2a2a; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
- .feedback-section { background: #2a2a2a; padding: 20px; border-radius: 10px; margin-top: 20px; }
- .user-card, .license-card, .invite-card { background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #d4af37; }
- .user-card h4, .license-card h4, .invite-card h4 { margin: 0 0 10px 0; color: #d4af37; }
- .status-badge { padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
- .status-active { background: #28a745; color: white; }
- .status-inactive { background: #dc3545; color: white; }
- .status-pending { background: #ffc107; color: black; }
- .btn-small { padding: 5px 10px; font-size: 0.8rem; margin: 2px; }
- @media (max-width: 768px) { 
- .sidebar { transform: translateX(-100%); } 
- .content-area { margin-left: 0; } 
- .hero h1 { font-size: 2rem; } 
- .apps-grid { grid-template-columns: 1fr; }
- .admin-tabs { flex-wrap: wrap; }
- .form-row { flex-direction: column; }
- }
- </style>
- <script src="https://js.stripe.com/v3/"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingGroup - Portal Oficial</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #d4af37 100%); color: #ffffff; min-height: 100vh; overflow-x: hidden; }
+        .header { background: rgba(26, 26, 26, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding: 1rem 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo-section { display: flex; align-items: center; gap: 0.75rem; }
+        .logo { width: 40px; height: 40px; background: linear-gradient(135deg, #d4af37, #f4d03f); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; color: #1a1a1a; }
+        .brand-text { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #d4af37, #f4d03f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 6px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: linear-gradient(135deg, #d4af37, #f4d03f); color: #1a1a1a; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.1); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .main-content { margin-top: 80px; padding: 2rem 0; }
+        .hero { text-align: center; padding: 4rem 0; }
+        .hero h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, #d4af37, #f4d03f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; }
+        .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .app-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; padding: 2rem; transition: all 0.3s ease; }
+        .app-card:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); }
+        .app-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .app-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #d4af37; }
+        .app-subtitle { font-size: 1rem; opacity: 0.8; margin-bottom: 1rem; }
+        .app-status { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1rem; }
+        .status-ready { background: rgba(76, 175, 80, 0.2); color: #4CAF50; border: 1px solid rgba(76, 175, 80, 0.3); }
+        .status-dev { background: rgba(255, 193, 7, 0.2); color: #FFC107; border: 1px solid rgba(255, 193, 7, 0.3); }
+        .app-description { font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.5rem; line-height: 1.5; }
+        .app-actions { display: flex; gap: 0.75rem; }
+        .sidebar { position: fixed; left: 0; top: 80px; width: 250px; height: calc(100vh - 80px); background: rgba(26, 26, 26, 0.95); backdrop-filter: blur(10px); border-right: 1px solid rgba(212, 175, 55, 0.3); padding: 2rem 0; z-index: 999; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
+        .sidebar-menu a { display: block; padding: 0.75rem 2rem; color: #ffffff; text-decoration: none; transition: all 0.3s ease; border-left: 3px solid transparent; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: rgba(212, 175, 55, 0.1); border-left-color: #d4af37; color: #d4af37; }
+        .content-area { margin-left: 250px; }
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); }
+        .modal-content { background: linear-gradient(135deg, #1a1a1a, #2c2c2c); margin: 5% auto; padding: 0; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .modal-header { background: linear-gradient(135deg, #d4af37, #f4d03f); color: #1a1a1a; padding: 1rem 1.5rem; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 2rem 1.5rem; }
+        .close { color: #1a1a1a; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { opacity: 0.7; }
+        .tabs { display: flex; margin-bottom: 1.5rem; border-radius: 8px; overflow: hidden; }
+        .tab { flex: 1; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); color: #ffffff; border: none; cursor: pointer; transition: all 0.3s ease; }
+        .tab.active { background: linear-gradient(135deg, #d4af37, #f4d03f); color: #1a1a1a; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: #d4af37; font-weight: 500; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; background: rgba(255, 255, 255, 0.05); color: #ffffff; font-size: 1rem; }
+        .form-group input:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2); }
+        .password-field { position: relative; }
+        .password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #d4af37; cursor: pointer; font-size: 1.2rem; }
+        .forgot-password { text-align: center; margin-top: 1rem; }
+        .forgot-password a { color: #d4af37; text-decoration: none; font-size: 0.9rem; }
+        .forgot-password a:hover { text-decoration: underline; }
+        
+        /* Dashboard Styles */
+        .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #333; }
+        .tab-button { background: #2a2a2a; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px 5px 0 0; transition: all 0.3s; }
+        .tab-button:hover { background: #3a3a3a; }
+        .tab-button.active { background: #d4af37; color: #000; }
+        .tab-content { display: none; padding: 20px 0; }
+        .tab-content.active { display: block; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #d4af37; font-weight: bold; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #555; border-radius: 5px; background: #2a2a2a; color: #fff; }
+        .form-group small { color: #888; font-size: 0.8rem; }
+        .form-row { display: flex; gap: 15px; }
+        .form-row .form-group { flex: 1; }
+        .invite-section { background: #2a2a2a; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .feedback-section { background: #2a2a2a; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        .user-card, .license-card, .invite-card { background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #d4af37; }
+        .user-card h4, .license-card h4, .invite-card h4 { margin: 0 0 10px 0; color: #d4af37; }
+        .status-badge { padding: 3px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+        .status-active { background: #28a745; color: white; }
+        .status-inactive { background: #dc3545; color: white; }
+        .status-pending { background: #ffc107; color: black; }
+        .btn-small { padding: 5px 10px; font-size: 0.8rem; margin: 2px; }
+        
+        @media (max-width: 768px) { 
+            .sidebar { transform: translateX(-100%); } 
+            .content-area { margin-left: 0; } 
+            .hero h1 { font-size: 2rem; } 
+            .apps-grid { grid-template-columns: 1fr; }
+            .admin-tabs { flex-wrap: wrap; }
+            .form-row { flex-direction: column; }
+        }
+    </style>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
- <header class="header">
- <div class="header-content">
- <div class="logo-section">
- <div class="logo">K</div>
- <div class="brand-text">KingGroup</div>
- </div>
- <div class="nav-actions">
- <a href="#" class="btn btn-primary" onclick="openLoginModal()">🔐 Login</a>
- <a href="#" class="btn btn-secondary">📱 Explorar Apps</a>
- </div>
- </div>
- </header>
- <div class="sidebar">
- <ul class="sidebar-menu">
- <li><a href="#" class="active">📱 Explorar Apps</a></li>
- <li><a href="#" onclick="openAdminModal()">⚙️ Admin</a></li>
- <li><a href="#" onclick="openTestadorModal()">🧪 Testador</a></li>
- <li><a href="#">ℹ️ Saiba Mais</a></li>
- <li><a href="#">📞 Contato</a></li>
- <li><a href="#">🌍 Idiomas</a></li>
- </ul>
- </div>
- <div class="content-area">
- <main class="main-content">
- <div class="container">
- <section class="hero">
- <h1>Família King - Aplicativos Revolucionários</h1>
- <p>Descubra nossa coleção de aplicativos inovadores desenvolvidos para transformar sua experiência digital.</p>
- </section>
- <section class="apps-grid">
- <div class="app-card">
- <div class="app-icon">🗺️</div>
- <h3 class="app-title">KingRoad</h3>
- <p class="app-subtitle">GPS Inteligente</p>
- <span class="app-status status-ready">✅ Pronto para uso</span>
- <p class="app-description">Sistema de navegação revolucionário para caminhões com mapas offline, rotas otimizadas e visão noturna avançada.</p>
- <div class="app-actions">
- <a href="#" class="btn btn-primary" onclick="downloadApp('KingRoad')">📱 Download</a>
- <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
- </div>
- </div>
- <div class="app-card">
- <div class="app-icon">🎵</div>
- <h3 class="app-title">KingMusic</h3>
- <p class="app-subtitle">Player Musical</p>
- <span class="app-status status-dev">🔧 Em desenvolvimento</span>
- <p class="app-description">Player avançado com scanner de partituras, OCR musical e reconhecimento de manuscritos musicais.</p>
- <div class="app-actions">
- <a href="#" class="btn btn-primary" onclick="downloadApp('KingMusic')">📱 Download</a>
- <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
- </div>
- </div>
- <div class="app-card">
- <div class="app-icon">📖</div>
- <h3 class="app-title">KingHinário CCB</h3>
- <p class="app-subtitle">Hinários Digitais</p>
- <span class="app-status status-dev">🔧 Em desenvolvimento</span>
- <p class="app-description">Hinários digitais da CCB com busca avançada, detecção de voz e sincronização automática.</p>
- <div class="app-actions">
- <a href="#" class="btn btn-primary" onclick="downloadApp('KingHinario')">📱 Download</a>
- <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
- </div>
- </div>
- <div class="app-card">
- <div class="app-icon">💼</div>
- <h3 class="app-title">KingJob</h3>
- <p class="app-subtitle">Plataforma de Empregos</p>
- <span class="app-status status-dev">🔧 Em desenvolvimento</span>
- <p class="app-description">Plataforma completa para busca de empregos com foco em motoristas e sistema de selfie profissional.</p>
- <div class="app-actions">
- <a href="#" class="btn btn-primary" onclick="downloadApp('KingJob')">📱 Download</a>
- <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
- </div>
- </div>
- <div class="app-card">
- <div class="app-icon">🎸</div>
- <h3 class="app-title">KingTuner</h3>
- <p class="app-subtitle">Afinador Musical</p>
- <span class="app-status status-dev">🔧 Em desenvolvimento</span>
- <p class="app-description">Afinador cromático profissional com metrônomo integrado e suporte para múltiplos instrumentos.</p>
- <div class="app-actions">
- <a href="#" class="btn btn-primary" onclick="downloadApp('KingTuner')">📱 Download</a>
- <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
- </div>
- </div>
- <div class="app-card">
- <div class="app-icon">📱</div>
- <h3 class="app-title">KingScan</h3>
- <p class="app-subtitle">Scanner Inteligente</p>
- <span class="app-status status-dev">🔧 Em desenvolvimento</span>
- <p class="app-description">Scanner inteligente com IA avançada, OCR profissional e reconhecimento de partituras musicais.</p>
- <div class="app-actions">
- <a href="#" class="btn btn-primary" onclick="downloadApp('KingScan')">📱 Download</a>
- <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
- </div>
- </div>
- </section>
- </div>
- </main>
- </div>
- <div id="forgotPasswordModal" class="modal">
- <div class="modal-content">
- <div class="modal-header">
- <h2>🔄 Recuperar Senha</h2>
- <span class="close" onclick="closeForgotPasswordModal()">&times;</span>
- </div>
- <div class="modal-body">
- <form onsubmit="event.preventDefault(); recoverPassword();">
- <div class="form-group">
- <label for="recoveryEmail">📧 Email ou Usuário:</label>
- <input type="text" id="recoveryEmail" name="recoveryEmail" required>
- </div>
- <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">📧 Enviar Código de Recuperação</button>
- </form>
- </div>
- </div>
- </div>
- <script>
- // Configuração da API Backend
- const API_BASE_URL = 'https://5001-ij6sqhbrrsd7ot8ifom0z-182d18f3.manusvm.computer/api';
- // Sistema de Autenticação
- class KingGroupAuth {
- constructor() {
- this.token = localStorage.getItem('kinggroup_token');
- this.user = JSON.parse(localStorage.getItem('kinggroup_user') || 'null');
- }
- async login(username, password, userType = 'admin') {
- try {
- const response = await fetch(`${API_BASE_URL}/auth/login`, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ username, password, user_type: userType })
- });
- const data = await response.json();
- if (response.ok) {
- this.token = data.token;
- this.user = data.user;
- localStorage.setItem('kinggroup_token', this.token);
- localStorage.setItem('kinggroup_user', JSON.stringify(this.user));
- return { success: true, user: this.user };
- } else {
- return { success: false, message: data.message || 'Erro no login' };
- }
- } catch (error) {
- return { success: false, message: 'Erro de conexão com o servidor' };
- }
- }
- logout() {
- this.token = null;
- this.user = null;
- localStorage.removeItem('kinggroup_token');
- localStorage.removeItem('kinggroup_user');
- }
- isLoggedIn() { return this.token && this.user; }
- isAdmin() { return this.user && this.user.user_type === 'admin'; }
- isTester() { return this.user && this.user.user_type === 'tester'; }
- getAuthHeaders() {
- return {
- 'Content-Type': 'application/json',
- 'Authorization': `Bearer ${this.token}`
- };
- }
- }
- // Sistema de Download de APK
- class KingGroupAPK {
- constructor(auth) { this.auth = auth; }
- async downloadAPK(appName) {
- if (!this.auth.isLoggedIn()) {
- return { success: false, message: 'Login necessário para download' };
- }
- try {
- const response = await fetch(`${API_BASE_URL}/apks/${appName}/download`, {
- headers: this.auth.getAuthHeaders()
- });
- if (response.ok) {
- const blob = await response.blob();
- const url = window.URL.createObjectURL(blob);
- const a = document.createElement('a');
- a.href = url;
- a.download = `${appName}.apk`;
- document.body.appendChild(a);
- a.click();
- window.URL.revokeObjectURL(url);
- document.body.removeChild(a);
- return { success: true, message: 'Download iniciado' };
- } else {
- const data = await response.json();
- return { success: false, message: data.message || 'Erro no download' };
- }
- } catch (error) {
- return { success: false, message: 'Erro de conexão' };
- }
- }
- }
- // Inicialização
- const a1b2c3 = new KingGroupAuth();
- const d4e5f6 = new KingGroupAPK(a1b2c3);
- // Funções de Interface
- function showNotification(message, type = 'info') {
- const notification = document.createElement('div');
- notification.innerHTML = message;
- notification.style.cssText = `
- position: fixed; top: 20px; right: 20px;
- background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
- color: white; padding: 15px 20px; border-radius: 5px; z-index: 10000;
- box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: Inter, sans-serif;
- `;
- document.body.appendChild(notification);
- setTimeout(() => notification.remove(), 3000);
- }
- function openLoginModal() { document.getElementById('loginModal').style.display = 'block'; }
- function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
- function openForgotPasswordModal() { 
- closeLoginModal();
- document.getElementById('forgotPasswordModal').style.display = 'block'; 
- }
- function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').style.display = 'none'; }
- function switchTab(type) {
- document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
- document.getElementById(type + 'Tab').classList.add('active');
- }
- function togglePassword() {
- const passwordField = document.getElementById('password');
- const toggleBtn = document.querySelector('.password-toggle');
- if (passwordField.type === 'password') {
- passwordField.type = 'text';
- toggleBtn.textContent = '🙈';
- } else {
- passwordField.type = 'password';
- toggleBtn.textContent = '👁️';
- }
- }
- async function login() {
- const username = document.getElementById('username').value;
- const password = document.getElementById('password').value;
- const isAdminTab = document.getElementById('adminTab').classList.contains('active');
- const userType = isAdminTab ? 'admin' : 'tester';
- if (!username || !password) {
- showNotification('❌ Preencha todos os campos', 'error');
- return;
- }
- const result = await a1b2c3.login(username, password, userType);
- if (result.success) {
- showNotification(`✅ Bem-vindo, ${result.user.username}!`, 'success');
- closeLoginModal();
- updateUIBasedOnAuth();
- } else {
- showNotification(`❌ ${result.message}`, 'error');
- }
- }
- function updateUIBasedOnAuth() {
- const loginBtn = document.querySelector('a[onclick="openLoginModal()"]');
- if (a1b2c3.isLoggedIn() && loginBtn) {
- loginBtn.innerHTML = `👋 ${a1b2c3.user.username}`;
- loginBtn.onclick = () => {
- if (confirm('Deseja fazer logout?')) {
- a1b2c3.logout();
- location.reload();
- }
- };
- }
- }
- async function downloadApp(appName) {
- if (!a1b2c3.isLoggedIn()) {
- openLoginModal();
- return;
- }
- // Verificar se o usuário tem licença para este app
- const user = a1b2c3.getCurrentUser();
- const licenses = await g7h8i9.getUserLicenses(user.id);
- const hasLicense = licenses.some(license => 
- license.app_name === appName && license.is_valid
- );
- if (!hasLicense) {
- // Usuário não tem licença, mostrar modal de pagamento
- const confirmPurchase = confirm(`Você não possui licença para ${appName}. Deseja comprar agora?`);
- if (confirmPurchase) {
- g7h8i9.showPaymentModal(appName);
- }
- return;
- }
- // Usuário tem licença, prosseguir com download
- const result = await d4e5f6.downloadAPK(appName);
- if (result.success) {
- showNotification('✅ Download iniciado!', 'success');
- } else {
- showNotification(`❌ ${result.message}`, 'error');
- }
- }
- function recoverPassword() {
- const email = document.getElementById('recoveryEmail').value;
- if (!email) {
- showNotification('❌ Digite seu email ou usuário', 'error');
- return;
- }
- showNotification('📧 Código de recuperação enviado!', 'success');
- closeForgotPasswordModal();
- }
- function openAdminModal() { 
- if (a1b2c3.isLoggedIn() && a1b2c3.isAdmin()) {
- showAdminDashboard();
- } else {
- openLoginModal();
- }
- }
- function openTestadorModal() { 
- if (a1b2c3.isLoggedIn() && a1b2c3.isTester()) {
- showTesterDashboard();
- } else {
- openLoginModal();
- }
- }
- function showAdminDashboard() {
- const dashboardHTML = `
- <div id="j1k2l3" class="modal" style="display: block;">
- <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
- <div class="modal-header">
- <h2>⚙️ Dashboard Administrativo</h2>
- <span class="close" onclick="closeAdminDashboard()">&times;</span>
- </div>
- <div class="modal-body">
- <div class="admin-tabs">
- <button class="tab-button active" onclick="showAdminTab('upload')">📤 Upload APK</button>
- <button class="tab-button" onclick="showAdminTab('users')">👥 Usuários</button>
- <button class="tab-button" onclick="showAdminTab('licenses')">🔑 Licenças</button>
- <button class="tab-button" onclick="showAdminTab('invites')">📧 Convites</button>
- <button class="tab-button" onclick="showAdminTab('analytics')">📊 Analytics</button>
- </div>
- <div id="uploadTab" class="tab-content active">
- <h3>📤 Upload de APK</h3>
- <form id="apkUploadForm" enctype="multipart/form-data">
- <div class="form-group">
- <label>📱 Aplicativo:</label>
- <select id="appName" required>
- <option value="">Selecione o app</option>
- <option value="KingRoad">🗺️ KingRoad</option>
- <option value="KingMusic">🎵 KingMusic</option>
- <option value="KingHinário CCB">📖 KingHinário CCB</option>
- <option value="KingJob">💼 KingJob</option>
- <option value="KingTuner">🎸 KingTuner</option>
- <option value="KingScan">📱 KingScan</option>
- </select>
- </div>
- <div class="form-group">
- <label>📁 Arquivo APK:</label>
- <input type="file" id="apkFile" accept=".apk" required>
- <small>Apenas arquivos .apk são aceitos</small>
- </div>
- <div class="form-row">
- <div class="form-group">
- <label>🔢 Versão:</label>
- <input type="text" id="version" placeholder="1.0.0" required>
- </div>
- <div class="form-group">
- <label>📊 Código da Versão:</label>
- <input type="number" id="versionCode" placeholder="1" required>
- </div>
- </div>
- <div class="form-group">
- <label>📱 Android Mínimo:</label>
- <select id="minAndroid">
- <option value="6.0">Android 6.0 (API 23)</option>
- <option value="7.0">Android 7.0 (API 24)</option>
- <option value="8.0">Android 8.0 (API 26)</option>
- <option value="9.0">Android 9.0 (API 28)</option>
- <option value="10.0">Android 10.0 (API 29)</option>
- <option value="11.0">Android 11.0 (API 30)</option>
- </select>
- </div>
- <div class="form-group">
- <label>🏷️ Status:</label>
- <select id="appStatus">
- <option value="development">🔧 Em desenvolvimento</option>
- <option value="beta">🧪 Beta</option>
- <option value="stable">✅ Estável</option>
- <option value="deprecated">⚠️ Descontinuado</option>
- </select>
- </div>
- <div class="form-group">
- <label>📝 Descrição:</label>
- <textarea id="description" rows="3" placeholder="Descrição da versão..."></textarea>
- </div>
- <div class="form-group">
- <label>📋 Changelog:</label>
- <textarea id="changelog" rows="4" placeholder="- Nova funcionalidade X&#10;- Correção de bug Y&#10;- Melhoria de performance"></textarea>
- </div>
- <button type="submit" class="btn btn-primary">📤 Fazer Upload</button>
- </form>
- </div>
- <div id="usersTab" class="tab-content">
- <h3>👥 Gestão de Usuários</h3>
- <div id="usersList">Carregando usuários...</div>
- </div>
- <div id="licensesTab" class="tab-content">
- <h3>🔑 Gestão de Licenças</h3>
- <div id="licensesList">Carregando licenças...</div>
- </div>
- <div id="invitesTab" class="tab-content">
- <h3>📧 Sistema de Convites</h3>
- <div class="invite-section">
- <h4>Criar Novo Convite</h4>
- <form id="inviteForm">
- <div class="form-row">
- <div class="form-group">
- <label>📧 Email:</label>
- <input type="email" id="inviteEmail" placeholder="testador@exemplo.com" required>
- </div>
- <div class="form-group">
- <label>🏷️ Tipo:</label>
- <select id="inviteType">
- <option value="tester">🧪 Testador</option>
- <option value="premium">💎 Premium</option>
- </select>
- </div>
- </div>
- <div class="form-group">
- <label>⏰ Validade (dias):</label>
- <input type="number" id="inviteValidity" value="30" min="1" max="365">
- </div>
- <button type="submit" class="btn btn-primary">📧 Enviar Convite</button>
- </form>
- </div>
- <div id="invitesList">Carregando convites...</div>
- </div>
- <div id="analyticsTab" class="tab-content">
- <h3>📊 Analytics</h3>
- <div id="analyticsData">Carregando dados...</div>
- </div>
- </div>
- </div>
- </div>
- `;
- document.body.insertAdjacentHTML('beforeend', dashboardHTML);
- loadAdminData();
- }
- function showTesterDashboard() {
- const dashboardHTML = `
- <div id="m4n5o6" class="modal" style="display: block;">
- <div class="modal-content" style="max-width: 700px;">
- <div class="modal-header">
- <h2>🧪 Dashboard do Testador</h2>
- <span class="close" onclick="closeTesterDashboard()">&times;</span>
- </div>
- <div class="modal-body">
- <div class="tester-info">
- <h3>📱 Apps Disponíveis para Teste</h3>
- <div id="testerApps">Carregando apps...</div>
- </div>
- <div class="feedback-section">
- <h3>📝 Enviar Feedback</h3>
- <form id="feedbackForm">
- <div class="form-group">
- <label>📱 App:</label>
- <select id="feedbackApp" required>
- <option value="">Selecione o app</option>
- <option value="KingRoad">🗺️ KingRoad</option>
- <option value="KingMusic">🎵 KingMusic</option>
- <option value="KingHinário CCB">📖 KingHinário CCB</option>
- <option value="KingJob">💼 KingJob</option>
- <option value="KingTuner">🎸 KingTuner</option>
- <option value="KingScan">📱 KingScan</option>
- </select>
- </div>
- <div class="form-group">
- <label>⭐ Avaliação:</label>
- <select id="feedbackRating">
- <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
- <option value="4">⭐⭐⭐⭐ Bom</option>
- <option value="3">⭐⭐⭐ Regular</option>
- <option value="2">⭐⭐ Ruim</option>
- <option value="1">⭐ Muito Ruim</option>
- </select>
- </div>
- <div class="form-group">
- <label>🏷️ Tipo:</label>
- <select id="feedbackType">
- <option value="bug">🐛 Bug Report</option>
- <option value="feature">💡 Sugestão</option>
- <option value="improvement">🔧 Melhoria</option>
- <option value="general">💬 Geral</option>
- </select>
- </div>
- <div class="form-group">
- <label>📝 Feedback:</label>
- <textarea id="feedbackText" rows="5" placeholder="Descreva seu feedback detalhadamente..." required></textarea>
- </div>
- <button type="submit" class="btn btn-primary">📤 Enviar Feedback</button>
- </form>
- </div>
- </div>
- </div>
- </div>
- `;
- document.body.insertAdjacentHTML('beforeend', dashboardHTML);
- loadTesterData();
- }
- // Fechar modais clicando fora
- window.onclick = function(event) {
- const loginModal = document.getElementById('loginModal');
- const forgotModal = document.getElementById('forgotPasswordModal');
- if (event.target === loginModal) closeLoginModal();
- if (event.target === forgotModal) closeForgotPasswordModal();
- }
- // Inicialização
- document.addEventListener('DOMContentLoaded', function() {
- console.log('🚀 KingGroup Backend Integration carregado!');
- updateUIBasedOnAuth();
- if (a1b2c3.isLoggedIn()) {
- console.log(`👋 Usuário ${a1b2c3.user.username} já está logado`);
- }
- });
- // Exportar para uso global
- // Sistema de Pagamento Integrado - KingGroup
- class KingPayment {
- constructor() {
- this.apiUrl = 'http://localhost:5001/api/payment';
- this.stripe = null;
- this.elements = null;
- this.cardElement = null;
- this.currentPaymentIntent = null;
- }
- async initializeStripe() {
- if (!window.Stripe) {
- await new Promise((resolve) => {
- const script = document.createElement('script');
- script.src = 'https://js.stripe.com/v3/';
- script.onload = resolve;
- document.head.appendChild(script);
- });
- }
- this.stripe = Stripe('pk_test_51234567890'); // Chave de teste
- this.elements = this.stripe.elements();
- this.cardElement = this.elements.create('card', {
- style: {
- base: {
- fontSize: '16px',
- color: '#424770',
- '::placeholder': { color: '#aab7c4' },
- },
- },
- });
- }
- async getAppPrice(appName, currency = 'USD') {
- try {
- const response = await fetch(`${this.apiUrl}/prices/${appName}?currency=${currency}`);
- const data = await response.json();
- return data.success ? data : null;
- } catch (error) {
- console.error('Erro ao buscar preço:', error);
- return null;
- }
- }
- async createPaymentIntent(appName, currency = 'USD') {
- try {
- const user = a1b2c3.getCurrentUser();
- if (!user) throw new Error('Usuário não logado');
- const response = await fetch(`${this.apiUrl}/create-payment-intent`, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({
- user_id: user.id,
- app_name: appName,
- currency: currency
- })
- });
- const data = await response.json();
- if (data.success) {
- this.currentPaymentIntent = data;
- return data;
- } else {
- throw new Error(data.error);
- }
- } catch (error) {
- console.error('Erro ao criar pagamento:', error);
- throw error;
- }
- }
- async confirmPayment() {
- try {
- if (!this.currentPaymentIntent) {
- throw new Error('Nenhuma intenção de pagamento ativa');
- }
- const {error, paymentIntent} = await this.stripe.confirmCardPayment(
- this.currentPaymentIntent.client_secret,
- { payment_method: { card: this.cardElement } }
- );
- if (error) throw new Error(error.message);
- const response = await fetch(`${this.apiUrl}/confirm-payment`, {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({
- payment_id: this.currentPaymentIntent.payment_id,
- stripe_payment_id: paymentIntent.id
- })
- });
- const data = await response.json();
- if (data.success) {
- return data;
- } else {
- throw new Error(data.error);
- }
- } catch (error) {
- console.error('Erro ao confirmar pagamento:', error);
- throw error;
- }
- }
- async getUserLicenses(userId) {
- try {
- const response = await fetch(`${this.apiUrl}/user/${userId}/licenses`);
- const data = await response.json();
- return data.success ? data.licenses : [];
- } catch (error) {
- console.error('Erro ao buscar licenças:', error);
- return [];
- }
- }
- async showPaymentModal(appName) {
- const priceData = await this.getAppPrice(appName);
- if (!priceData) {
- showNotification('❌ Erro ao carregar informações do app', 'error');
- return;
- }
- const modalHTML = `
- <div id="paymentModal" class="modal" style="display: block;">
- <div class="modal-content" style="max-width: 500px;">
- <div class="modal-header">
- <h2>💳 Comprar ${appName}</h2>
- <span class="close" onclick="closePaymentModal()">&times;</span>
- </div>
- <div class="modal-body">
- <div class="payment-info" style="text-align: center; margin-bottom: 20px;">
- <h3>${appName}</h3>
- <p>${priceData.description}</p>
- <div class="price-display" style="font-size: 24px; color: #d4af37; font-weight: bold;">
- $${priceData.price} USD
- </div>
- </div>
- <div class="payment-form">
- <h4>Informações de Pagamento</h4>
- <div id="card-element" style="padding: 15px; border: 1px solid #ccc; border-radius: 8px; margin: 15px 0; background: white;"></div>
- <div id="card-errors" role="alert" style="color: red; margin: 10px 0; font-size: 14px;"></div>
- </div>
- <div class="payment-actions" style="display: flex; gap: 10px; justify-content: center;">
- <button id="payButton" class="btn btn-primary" onclick="processPayment('${appName}')" style="flex: 1;">
- 💳 Pagar $${priceData.price}
- </button>
- <button class="btn btn-secondary" onclick="closePaymentModal()" style="flex: 1;">
- ❌ Cancelar
- </button>
- </div>
- </div>
- </div>
- </div>
- `;
- document.body.insertAdjacentHTML('beforeend', modalHTML);
- await this.initializeStripe();
- this.cardElement.mount('#card-element');
- this.cardElement.on('change', ({error}) => {
- const displayError = document.getElementById('card-errors');
- if (error) {
- displayError.textContent = error.message;
- } else {
- displayError.textContent = '';
- }
- });
- }
- async processPayment(appName) {
- const payButton = document.getElementById('payButton');
- const originalText = payButton.innerHTML;
- try {
- payButton.innerHTML = '⏳ Processando...';
- payButton.disabled = true;
- await this.createPaymentIntent(appName);
- const result = await this.confirmPayment();
- showNotification('✅ Pagamento realizado com sucesso!', 'success');
- showNotification(`🔑 Licença: ${result.license.license_key.substring(0, 8)}...`, 'info');
- closePaymentModal();
- } catch (error) {
- showNotification(`❌ Erro no pagamento: ${error.message}`, 'error');
- } finally {
- payButton.innerHTML = originalText;
- payButton.disabled = false;
- }
- }
- }
- function closePaymentModal() {
- const modal = document.getElementById('paymentModal');
- if (modal) modal.remove();
- }
- function processPayment(appName) {
- g7h8i9.processPayment(appName);
- }
- const g7h8i9 = new KingPayment();
- // Funções dos Dashboards
- function showAdminTab(tabName) {
- // Remover active de todas as abas
- document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
- document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
- // Ativar aba selecionada
- event.target.classList.add('active');
- document.getElementById(tabName + 'Tab').classList.add('active');
- // Carregar dados específicos da aba
- if (tabName === 'users') loadUsers();
- else if (tabName === 'licenses') loadLicenses();
- else if (tabName === 'invites') loadInvites();
- else if (tabName === 'analytics') loadAnalytics();
- }
- function closeAdminDashboard() {
- const modal = document.getElementById('j1k2l3');
- if (modal) modal.remove();
- }
- function closeTesterDashboard() {
- const modal = document.getElementById('m4n5o6');
- if (modal) modal.remove();
- }
- async function loadAdminData() {
- // Configurar event listeners
- document.getElementById('apkUploadForm').addEventListener('submit', handleAPKUpload);
- document.getElementById('inviteForm').addEventListener('submit', handleInviteSubmit);
- // Carregar dados iniciais
- loadUsers();
- }
- async function loadTesterData() {
- document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackSubmit);
- loadTesterApps();
- }
- async function handleAPKUpload(event) {
- event.preventDefault();
- const formData = new FormData();
- const fileInput = document.getElementById('apkFile');
- const file = fileInput.files[0];
- if (!file) {
- showNotification('❌ Selecione um arquivo APK', 'error');
- return;
- }
- // Adicionar dados do formulário
- formData.append('file', file);
- formData.append('app_name', document.getElementById('appName').value);
- formData.append('version', document.getElementById('version').value);
- formData.append('version_code', document.getElementById('versionCode').value);
- formData.append('min_android_version', document.getElementById('minAndroid').value);
- formData.append('status', document.getElementById('appStatus').value);
- formData.append('description', document.getElementById('description').value);
- formData.append('changelog', document.getElementById('changelog').value);
- try {
- const response = await fetch('http://localhost:5001/api/admin/upload', {
- method: 'POST',
- body: formData
- });
- const result = await response.json();
- if (result.success) {
- showNotification('✅ APK enviado com sucesso!', 'success');
- document.getElementById('apkUploadForm').reset();
- } else {
- showNotification(`❌ Erro: ${result.error}`, 'error');
- }
- } catch (error) {
- showNotification(`❌ Erro de conexão: ${error.message}`, 'error');
- }
- }
- async function handleInviteSubmit(event) {
- event.preventDefault();
- const inviteData = {
- email: document.getElementById('inviteEmail').value,
- type: document.getElementById('inviteType').value,
- validity_days: document.getElementById('inviteValidity').value
- };
- try {
- const response = await fetch('http://localhost:5001/api/admin/invites', {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify(inviteData)
- });
- const result = await response.json();
- if (result.success) {
- showNotification('✅ Convite enviado com sucesso!', 'success');
- document.getElementById('inviteForm').reset();
- loadInvites();
- } else {
- showNotification(`❌ Erro: ${result.error}`, 'error');
- }
- } catch (error) {
- showNotification(`❌ Erro de conexão: ${error.message}`, 'error');
- }
- }
- async function handleFeedbackSubmit(event) {
- event.preventDefault();
- const feedbackData = {
- app_name: document.getElementById('feedbackApp').value,
- rating: document.getElementById('feedbackRating').value,
- type: document.getElementById('feedbackType').value,
- feedback: document.getElementById('feedbackText').value
- };
- try {
- const response = await fetch('http://localhost:5001/api/feedback', {
- method: 'POST',
- headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify(feedbackData)
- });
- const result = await response.json();
- if (result.success) {
- showNotification('✅ Feedback enviado com sucesso!', 'success');
- document.getElementById('feedbackForm').reset();
- } else {
- showNotification(`❌ Erro: ${result.error}`, 'error');
- }
- } catch (error) {
- showNotification(`❌ Erro de conexão: ${error.message}`, 'error');
- }
- }
- async function loadUsers() {
- try {
- const response = await fetch('http://localhost:5001/api/users');
- const users = await response.json();
- const usersList = document.getElementById('usersList');
- if (!usersList) return;
- usersList.innerHTML = users.map(user => `
- <div class="user-card">
- <h4>👤 ${user.username}</h4>
- <p><strong>Email:</strong> ${user.email}</p>
- <p><strong>Tipo:</strong> ${user.user_type}</p>
- <p><strong>Status:</strong> <span class="status-badge ${user.is_active ? 'status-active' : 'status-inactive'}">${user.is_active ? 'Ativo' : 'Inativo'}</span></p>
- <p><strong>Criado:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
- <div>
- <button class="btn btn-small" onclick="toggleUserStatus(${user.id}, ${!user.is_active})">
- ${user.is_active ? '🚫 Desativar' : '✅ Ativar'}
- </button>
- <button class="btn btn-small" onclick="resetUserPassword(${user.id})">🔄 Reset Senha</button>
- </div>
- </div>
- `).join('');
- } catch (error) {
- document.getElementById('usersList').innerHTML = '❌ Erro ao carregar usuários';
- }
- }
- async function loadLicenses() {
- try {
- const response = await fetch('http://localhost:5001/api/admin/licenses');
- const result = await response.json();
- const licensesList = document.getElementById('licensesList');
- if (!licensesList) return;
- if (result.success) {
- licensesList.innerHTML = result.licenses.map(license => `
- <div class="license-card">
- <h4>🔑 ${license.app_name}</h4>
- <p><strong>Usuário:</strong> ${license.user_email}</p>
- <p><strong>Chave:</strong> <code>${license.license_key}</code></p>
- <p><strong>Status:</strong> <span class="status-badge ${license.is_valid ? 'status-active' : 'status-inactive'}">${license.is_valid ? 'Válida' : 'Inválida'}</span></p>
- <p><strong>Expira:</strong> ${license.expires_at ? new Date(license.expires_at).toLocaleDateString() : 'Nunca'}</p>
- <div>
- <button class="btn btn-small" onclick="revokeLicense('${license.license_key}')">🚫 Revogar</button>
- <button class="btn btn-small" onclick="extendLicense('${license.license_key}')">⏰ Estender</button>
- </div>
- </div>
- `).join('');
- } else {
- licensesList.innerHTML = '❌ Erro ao carregar licenças';
- }
- } catch (error) {
- document.getElementById('licensesList').innerHTML = '❌ Erro ao carregar licenças';
- }
- }
- async function loadInvites() {
- const invitesList = document.getElementById('invitesList');
- if (!invitesList) return;
- invitesList.innerHTML = `
- <div class="invite-card">
- <h4>📧 Sistema de Convites</h4>
- <p>Funcionalidade em desenvolvimento. Em breve você poderá:</p>
- <ul>
- <li>✅ Enviar convites por email</li>
- <li>✅ Gerenciar convites pendentes</li>
- <li>✅ Definir permissões específicas</li>
- <li>✅ Rastrear uso de convites</li>
- </ul>
- </div>
- `;
- }
- async function loadAnalytics() {
- const analyticsData = document.getElementById('analyticsData');
- if (!analyticsData) return;
- analyticsData.innerHTML = `
- <div class="user-card">
- <h4>📊 Estatísticas do Sistema</h4>
- <p><strong>Total de Usuários:</strong> <span id="totalUsers">Carregando...</span></p>
- <p><strong>Licenças Ativas:</strong> <span id="activeLicenses">Carregando...</span></p>
- <p><strong>Downloads Hoje:</strong> <span id="todayDownloads">Carregando...</span></p>
- <p><strong>Receita Total:</strong> <span id="totalRevenue">Carregando...</span></p>
- </div>
- `;
- // Carregar estatísticas reais
- try {
- const response = await fetch('http://localhost:5001/api/users');
- const users = await response.json();
- document.getElementById('totalUsers').textContent = users.length;
- } catch (error) {
- document.getElementById('totalUsers').textContent = 'Erro';
- }
- }
- async function loadTesterApps() {
- const testerApps = document.getElementById('testerApps');
- if (!testerApps) return;
- testerApps.innerHTML = `
- <div class="user-card">
- <h4>🗺️ KingRoad</h4>
- <p><strong>Versão:</strong> 1.0.0 Beta</p>
- <p><strong>Status:</strong> <span class="status-badge status-pending">Em Teste</span></p>
- <button class="btn btn-small">📱 Download</button>
- </div>
- <div class="user-card">
- <h4>🎵 KingMusic</h4>
- <p><strong>Versão:</strong> 0.9.5 Alpha</p>
- <p><strong>Status:</strong> <span class="status-badge status-pending">Em Teste</span></p>
- <button class="btn btn-small">📱 Download</button>
- </div>
- `;
- }
- window.KingGroup = { auth: a1b2c3, apk: d4e5f6, payment: g7h8i9, showNotification, downloadApp };
- console.log('🔗 Sistema de integração KingGroup carregado com sucesso!');
- </script>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">K</div>
+                <div class="brand-text">KingGroup</div>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-primary" onclick="openLoginModal()">🔐 Login</a>
+                <a href="#" class="btn btn-secondary">📱 Explorar Apps</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active">📱 Explorar Apps</a></li>
+            <li><a href="#" onclick="openAdminModal()">⚙️ Admin</a></li>
+            <li><a href="#" onclick="openTestadorModal()">🧪 Testador</a></li>
+            <li><a href="#">ℹ️ Saiba Mais</a></li>
+            <li><a href="#">📞 Contato</a></li>
+            <li><a href="#">🌍 Idiomas</a></li>
+        </ul>
+    </div>
+
+    <div class="content-area">
+        <main class="main-content">
+            <div class="container">
+                <section class="hero">
+                    <h1>Família King - Aplicativos Revolucionários</h1>
+                    <p>Descubra nossa coleção de aplicativos inovadores desenvolvidos para transformar sua experiência digital.</p>
+                </section>
+
+                <section class="apps-grid">
+                    <div class="app-card">
+                        <div class="app-icon">🗺️</div>
+                        <h3 class="app-title">KingRoad</h3>
+                        <p class="app-subtitle">GPS Inteligente</p>
+                        <span class="app-status status-ready">✅ Pronto para uso</span>
+                        <p class="app-description">Sistema de navegação revolucionário para caminhões com mapas offline, rotas otimizadas e visão noturna avançada.</p>
+                        <div class="app-actions">
+                            <a href="#" class="btn btn-primary" onclick="downloadApp('KingRoad')">📱 Download</a>
+                            <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">🎵</div>
+                        <h3 class="app-title">KingMusic</h3>
+                        <p class="app-subtitle">Player Musical</p>
+                        <span class="app-status status-dev">🔧 Em desenvolvimento</span>
+                        <p class="app-description">Player avançado com scanner de partituras, OCR musical e reconhecimento de manuscritos musicais.</p>
+                        <div class="app-actions">
+                            <a href="#" class="btn btn-primary" onclick="downloadApp('KingMusic')">📱 Download</a>
+                            <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">📖</div>
+                        <h3 class="app-title">KingHinário CCB</h3>
+                        <p class="app-subtitle">Hinários Digitais</p>
+                        <span class="app-status status-dev">🔧 Em desenvolvimento</span>
+                        <p class="app-description">Hinários digitais da CCB com busca avançada, detecção de voz e sincronização automática.</p>
+                        <div class="app-actions">
+                            <a href="#" class="btn btn-primary" onclick="downloadApp('KingHinario')">📱 Download</a>
+                            <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">💼</div>
+                        <h3 class="app-title">KingJob</h3>
+                        <p class="app-subtitle">Plataforma de Empregos</p>
+                        <span class="app-status status-dev">🔧 Em desenvolvimento</span>
+                        <p class="app-description">Plataforma completa para busca de empregos com foco em motoristas e sistema de selfie profissional.</p>
+                        <div class="app-actions">
+                            <a href="#" class="btn btn-primary" onclick="downloadApp('KingJob')">📱 Download</a>
+                            <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">🎸</div>
+                        <h3 class="app-title">KingTuner</h3>
+                        <p class="app-subtitle">Afinador Musical</p>
+                        <span class="app-status status-dev">🔧 Em desenvolvimento</span>
+                        <p class="app-description">Afinador cromático profissional com metrônomo integrado e suporte para múltiplos instrumentos.</p>
+                        <div class="app-actions">
+                            <a href="#" class="btn btn-primary" onclick="downloadApp('KingTuner')">📱 Download</a>
+                            <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                        </div>
+                    </div>
+
+                    <div class="app-card">
+                        <div class="app-icon">📱</div>
+                        <h3 class="app-title">KingScan</h3>
+                        <p class="app-subtitle">Scanner Inteligente</p>
+                        <span class="app-status status-dev">🔧 Em desenvolvimento</span>
+                        <p class="app-description">Scanner inteligente com IA avançada, OCR profissional e reconhecimento de partituras musicais.</p>
+                        <div class="app-actions">
+                            <a href="#" class="btn btn-primary" onclick="downloadApp('KingScan')">📱 Download</a>
+                            <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔐 Login KingGroup</h2>
+                <span class="close" onclick="closeLoginModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab active" id="adminTab" onclick="switchTab('admin')">👑 Administrador</button>
+                    <button class="tab" id="testerTab" onclick="switchTab('tester')">🧪 Testador</button>
+                </div>
+                
+                <form onsubmit="event.preventDefault(); login();">
+                    <div class="form-group">
+                        <label for="username">👤 Usuário/Email:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">🔒 Senha:</label>
+                        <div class="password-field">
+                            <input type="password" id="password" name="password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">🔐 Entrar</button>
+                </form>
+                
+                <div class="forgot-password">
+                    <a href="#" onclick="openForgotPasswordModal()">🔄 Esqueci minha senha</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Esqueci Senha -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔄 Recuperar Senha</h2>
+                <span class="close" onclick="closeForgotPasswordModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="event.preventDefault(); recoverPassword();">
+                    <div class="form-group">
+                        <label for="recoveryEmail">📧 Email ou Usuário:</label>
+                        <input type="text" id="recoveryEmail" name="recoveryEmail" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">📧 Enviar Código de Recuperação</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração da API Backend
+        const API_BASE_URL = 'https://5001-ij6sqhbrrsd7ot8ifom0z-182d18f3.manusvm.computer/api';
+
+        // Sistema de Autenticação
+        class KingGroupAuth {
+            constructor() {
+                this.token = localStorage.getItem('kinggroup_token');
+                this.user = JSON.parse(localStorage.getItem('kinggroup_user') || 'null');
+            }
+
+            async login(username, password, userType = 'admin') {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password, user_type: userType })
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        this.token = data.token;
+                        this.user = data.user;
+                        localStorage.setItem('kinggroup_token', this.token);
+                        localStorage.setItem('kinggroup_user', JSON.stringify(this.user));
+                        return { success: true, user: this.user };
+                    } else {
+                        return { success: false, message: data.message || 'Erro no login' };
+                    }
+                } catch (error) {
+                    return { success: false, message: 'Erro de conexão com o servidor' };
+                }
+            }
+
+            logout() {
+                this.token = null;
+                this.user = null;
+                localStorage.removeItem('kinggroup_token');
+                localStorage.removeItem('kinggroup_user');
+            }
+
+            isLoggedIn() { return this.token && this.user; }
+            isAdmin() { return this.user && this.user.user_type === 'admin'; }
+            isTester() { return this.user && this.user.user_type === 'tester'; }
+
+            getAuthHeaders() {
+                return {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                };
+            }
+        }
+
+        // Sistema de Download de APK
+        class KingGroupAPK {
+            constructor(auth) { this.auth = auth; }
+
+            async downloadAPK(appName) {
+                if (!this.auth.isLoggedIn()) {
+                    return { success: false, message: 'Login necessário para download' };
+                }
+                try {
+                    const response = await fetch(`${API_BASE_URL}/apks/${appName}/download`, {
+                        headers: this.auth.getAuthHeaders()
+                    });
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${appName}.apk`;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                        return { success: true, message: 'Download iniciado' };
+                    } else {
+                        const data = await response.json();
+                        return { success: false, message: data.message || 'Erro no download' };
+                    }
+                } catch (error) {
+                    return { success: false, message: 'Erro de conexão' };
+                }
+            }
+        }
+
+        // Inicialização
+        const kingAuth = new KingGroupAuth();
+        const kingAPK = new KingGroupAPK(kingAuth);
+
+        // Funções de Interface
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.innerHTML = message;
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white; padding: 15px 20px; border-radius: 5px; z-index: 10000;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-family: Inter, sans-serif;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function openLoginModal() { document.getElementById('loginModal').style.display = 'block'; }
+        function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+        function openForgotPasswordModal() { 
+            closeLoginModal();
+            document.getElementById('forgotPasswordModal').style.display = 'block'; 
+        }
+        function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').style.display = 'none'; }
+
+        function switchTab(type) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(type + 'Tab').classList.add('active');
+        }
+
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordField.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const isAdminTab = document.getElementById('adminTab').classList.contains('active');
+            const userType = isAdminTab ? 'admin' : 'tester';
+            
+            if (!username || !password) {
+                showNotification('❌ Preencha todos os campos', 'error');
+                return;
+            }
+
+            const result = await kingAuth.login(username, password, userType);
+            if (result.success) {
+                showNotification(`✅ Bem-vindo, ${result.user.username}!`, 'success');
+                closeLoginModal();
+                updateUIBasedOnAuth();
+            } else {
+                showNotification(`❌ ${result.message}`, 'error');
+            }
+        }
+
+        function updateUIBasedOnAuth() {
+            const loginBtn = document.querySelector('a[onclick="openLoginModal()"]');
+            if (kingAuth.isLoggedIn() && loginBtn) {
+                loginBtn.innerHTML = `👋 ${kingAuth.user.username}`;
+                loginBtn.onclick = () => {
+                    if (confirm('Deseja fazer logout?')) {
+                        kingAuth.logout();
+                        location.reload();
+                    }
+                };
+            }
+        }
+
+        async function downloadApp(appName) {
+            if (!kingAuth.isLoggedIn()) {
+                openLoginModal();
+                return;
+            }
+
+            // Verificar se o usuário tem licença para este app
+            const user = kingAuth.getCurrentUser();
+            const licenses = await kingPayment.getUserLicenses(user.id);
+            const hasLicense = licenses.some(license => 
+                license.app_name === appName && license.is_valid
+            );
+
+            if (!hasLicense) {
+                // Usuário não tem licença, mostrar modal de pagamento
+                const confirmPurchase = confirm(`Você não possui licença para ${appName}. Deseja comprar agora?`);
+                if (confirmPurchase) {
+                    kingPayment.showPaymentModal(appName);
+                }
+                return;
+            }
+
+            // Usuário tem licença, prosseguir com download
+            const result = await kingAPK.downloadAPK(appName);
+            if (result.success) {
+                showNotification('✅ Download iniciado!', 'success');
+            } else {
+                showNotification(`❌ ${result.message}`, 'error');
+            }
+        }
+
+        function recoverPassword() {
+            const email = document.getElementById('recoveryEmail').value;
+            if (!email) {
+                showNotification('❌ Digite seu email ou usuário', 'error');
+                return;
+            }
+            showNotification('📧 Código de recuperação enviado!', 'success');
+            closeForgotPasswordModal();
+        }
+
+        function openAdminModal() { 
+            if (kingAuth.isLoggedIn() && kingAuth.isAdmin()) {
+                showAdminDashboard();
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function openTestadorModal() { 
+            if (kingAuth.isLoggedIn() && kingAuth.isTester()) {
+                showTesterDashboard();
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function showAdminDashboard() {
+            const dashboardHTML = `
+                <div id="adminDashboard" class="modal" style="display: block;">
+                    <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+                        <div class="modal-header">
+                            <h2>⚙️ Dashboard Administrativo</h2>
+                            <span class="close" onclick="closeAdminDashboard()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="admin-tabs">
+                                <button class="tab-button active" onclick="showAdminTab('upload')">📤 Upload APK</button>
+                                <button class="tab-button" onclick="showAdminTab('users')">👥 Usuários</button>
+                                <button class="tab-button" onclick="showAdminTab('licenses')">🔑 Licenças</button>
+                                <button class="tab-button" onclick="showAdminTab('invites')">📧 Convites</button>
+                                <button class="tab-button" onclick="showAdminTab('analytics')">📊 Analytics</button>
+                            </div>
+                            
+                            <div id="uploadTab" class="tab-content active">
+                                <h3>📤 Upload de APK</h3>
+                                <form id="apkUploadForm" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label>📱 Aplicativo:</label>
+                                        <select id="appName" required>
+                                            <option value="">Selecione o app</option>
+                                            <option value="KingRoad">🗺️ KingRoad</option>
+                                            <option value="KingMusic">🎵 KingMusic</option>
+                                            <option value="KingHinário CCB">📖 KingHinário CCB</option>
+                                            <option value="KingJob">💼 KingJob</option>
+                                            <option value="KingTuner">🎸 KingTuner</option>
+                                            <option value="KingScan">📱 KingScan</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>📁 Arquivo APK:</label>
+                                        <input type="file" id="apkFile" accept=".apk" required>
+                                        <small>Apenas arquivos .apk são aceitos</small>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>🔢 Versão:</label>
+                                            <input type="text" id="version" placeholder="1.0.0" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>📊 Código da Versão:</label>
+                                            <input type="number" id="versionCode" placeholder="1" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>📱 Android Mínimo:</label>
+                                        <select id="minAndroid">
+                                            <option value="6.0">Android 6.0 (API 23)</option>
+                                            <option value="7.0">Android 7.0 (API 24)</option>
+                                            <option value="8.0">Android 8.0 (API 26)</option>
+                                            <option value="9.0">Android 9.0 (API 28)</option>
+                                            <option value="10.0">Android 10.0 (API 29)</option>
+                                            <option value="11.0">Android 11.0 (API 30)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>🏷️ Status:</label>
+                                        <select id="appStatus">
+                                            <option value="development">🔧 Em desenvolvimento</option>
+                                            <option value="beta">🧪 Beta</option>
+                                            <option value="stable">✅ Estável</option>
+                                            <option value="deprecated">⚠️ Descontinuado</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>📝 Descrição:</label>
+                                        <textarea id="description" rows="3" placeholder="Descrição da versão..."></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>📋 Changelog:</label>
+                                        <textarea id="changelog" rows="4" placeholder="- Nova funcionalidade X&#10;- Correção de bug Y&#10;- Melhoria de performance"></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">📤 Fazer Upload</button>
+                                </form>
+                            </div>
+                            
+                            <div id="usersTab" class="tab-content">
+                                <h3>👥 Gestão de Usuários</h3>
+                                <div id="usersList">Carregando usuários...</div>
+                            </div>
+                            
+                            <div id="licensesTab" class="tab-content">
+                                <h3>🔑 Gestão de Licenças</h3>
+                                <div id="licensesList">Carregando licenças...</div>
+                            </div>
+                            
+                            <div id="invitesTab" class="tab-content">
+                                <h3>📧 Sistema de Convites</h3>
+                                <div class="invite-section">
+                                    <h4>Criar Novo Convite</h4>
+                                    <form id="inviteForm">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>📧 Email:</label>
+                                                <input type="email" id="inviteEmail" placeholder="testador@exemplo.com" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>🏷️ Tipo:</label>
+                                                <select id="inviteType">
+                                                    <option value="tester">🧪 Testador</option>
+                                                    <option value="premium">💎 Premium</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>⏰ Validade (dias):</label>
+                                            <input type="number" id="inviteValidity" value="30" min="1" max="365">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">📧 Enviar Convite</button>
+                                    </form>
+                                </div>
+                                <div id="invitesList">Carregando convites...</div>
+                            </div>
+                            
+                            <div id="analyticsTab" class="tab-content">
+                                <h3>📊 Analytics</h3>
+                                <div id="analyticsData">Carregando dados...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', dashboardHTML);
+            loadAdminData();
+        }
+
+        function showTesterDashboard() {
+            const dashboardHTML = `
+                <div id="testerDashboard" class="modal" style="display: block;">
+                    <div class="modal-content" style="max-width: 700px;">
+                        <div class="modal-header">
+                            <h2>🧪 Dashboard do Testador</h2>
+                            <span class="close" onclick="closeTesterDashboard()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="tester-info">
+                                <h3>📱 Apps Disponíveis para Teste</h3>
+                                <div id="testerApps">Carregando apps...</div>
+                            </div>
+                            
+                            <div class="feedback-section">
+                                <h3>📝 Enviar Feedback</h3>
+                                <form id="feedbackForm">
+                                    <div class="form-group">
+                                        <label>📱 App:</label>
+                                        <select id="feedbackApp" required>
+                                            <option value="">Selecione o app</option>
+                                            <option value="KingRoad">🗺️ KingRoad</option>
+                                            <option value="KingMusic">🎵 KingMusic</option>
+                                            <option value="KingHinário CCB">📖 KingHinário CCB</option>
+                                            <option value="KingJob">💼 KingJob</option>
+                                            <option value="KingTuner">🎸 KingTuner</option>
+                                            <option value="KingScan">📱 KingScan</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>⭐ Avaliação:</label>
+                                        <select id="feedbackRating">
+                                            <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+                                            <option value="4">⭐⭐⭐⭐ Bom</option>
+                                            <option value="3">⭐⭐⭐ Regular</option>
+                                            <option value="2">⭐⭐ Ruim</option>
+                                            <option value="1">⭐ Muito Ruim</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>🏷️ Tipo:</label>
+                                        <select id="feedbackType">
+                                            <option value="bug">🐛 Bug Report</option>
+                                            <option value="feature">💡 Sugestão</option>
+                                            <option value="improvement">🔧 Melhoria</option>
+                                            <option value="general">💬 Geral</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>📝 Feedback:</label>
+                                        <textarea id="feedbackText" rows="5" placeholder="Descreva seu feedback detalhadamente..." required></textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">📤 Enviar Feedback</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', dashboardHTML);
+            loadTesterData();
+        }
+
+        // Fechar modais clicando fora
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const forgotModal = document.getElementById('forgotPasswordModal');
+            if (event.target === loginModal) closeLoginModal();
+            if (event.target === forgotModal) closeForgotPasswordModal();
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 KingGroup Backend Integration carregado!');
+            updateUIBasedOnAuth();
+            if (kingAuth.isLoggedIn()) {
+                console.log(`👋 Usuário ${kingAuth.user.username} já está logado`);
+            }
+        });
+
+        // Exportar para uso global
+        // Sistema de Pagamento Integrado - KingGroup
+        class KingPayment {
+            constructor() {
+                this.apiUrl = 'http://localhost:5001/api/payment';
+                this.stripe = null;
+                this.elements = null;
+                this.cardElement = null;
+                this.currentPaymentIntent = null;
+            }
+
+            async initializeStripe() {
+                if (!window.Stripe) {
+                    await new Promise((resolve) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://js.stripe.com/v3/';
+                        script.onload = resolve;
+                        document.head.appendChild(script);
+                    });
+                }
+
+                this.stripe = Stripe('pk_test_51234567890');  // Chave de teste
+                this.elements = this.stripe.elements();
+                
+                this.cardElement = this.elements.create('card', {
+                    style: {
+                        base: {
+                            fontSize: '16px',
+                            color: '#424770',
+                            '::placeholder': { color: '#aab7c4' },
+                        },
+                    },
+                });
+            }
+
+            async getAppPrice(appName, currency = 'USD') {
+                try {
+                    const response = await fetch(`${this.apiUrl}/prices/${appName}?currency=${currency}`);
+                    const data = await response.json();
+                    return data.success ? data : null;
+                } catch (error) {
+                    console.error('Erro ao buscar preço:', error);
+                    return null;
+                }
+            }
+
+            async createPaymentIntent(appName, currency = 'USD') {
+                try {
+                    const user = kingAuth.getCurrentUser();
+                    if (!user) throw new Error('Usuário não logado');
+
+                    const response = await fetch(`${this.apiUrl}/create-payment-intent`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            user_id: user.id,
+                            app_name: appName,
+                            currency: currency
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        this.currentPaymentIntent = data;
+                        return data;
+                    } else {
+                        throw new Error(data.error);
+                    }
+                } catch (error) {
+                    console.error('Erro ao criar pagamento:', error);
+                    throw error;
+                }
+            }
+
+            async confirmPayment() {
+                try {
+                    if (!this.currentPaymentIntent) {
+                        throw new Error('Nenhuma intenção de pagamento ativa');
+                    }
+
+                    const {error, paymentIntent} = await this.stripe.confirmCardPayment(
+                        this.currentPaymentIntent.client_secret,
+                        { payment_method: { card: this.cardElement } }
+                    );
+
+                    if (error) throw new Error(error.message);
+
+                    const response = await fetch(`${this.apiUrl}/confirm-payment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            payment_id: this.currentPaymentIntent.payment_id,
+                            stripe_payment_id: paymentIntent.id
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        return data;
+                    } else {
+                        throw new Error(data.error);
+                    }
+                } catch (error) {
+                    console.error('Erro ao confirmar pagamento:', error);
+                    throw error;
+                }
+            }
+
+            async getUserLicenses(userId) {
+                try {
+                    const response = await fetch(`${this.apiUrl}/user/${userId}/licenses`);
+                    const data = await response.json();
+                    return data.success ? data.licenses : [];
+                } catch (error) {
+                    console.error('Erro ao buscar licenças:', error);
+                    return [];
+                }
+            }
+
+            async showPaymentModal(appName) {
+                const priceData = await this.getAppPrice(appName);
+                if (!priceData) {
+                    showNotification('❌ Erro ao carregar informações do app', 'error');
+                    return;
+                }
+
+                const modalHTML = `
+                    <div id="paymentModal" class="modal" style="display: block;">
+                        <div class="modal-content" style="max-width: 500px;">
+                            <div class="modal-header">
+                                <h2>💳 Comprar ${appName}</h2>
+                                <span class="close" onclick="closePaymentModal()">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="payment-info" style="text-align: center; margin-bottom: 20px;">
+                                    <h3>${appName}</h3>
+                                    <p>${priceData.description}</p>
+                                    <div class="price-display" style="font-size: 24px; color: #d4af37; font-weight: bold;">
+                                        $${priceData.price} USD
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-form">
+                                    <h4>Informações de Pagamento</h4>
+                                    <div id="card-element" style="padding: 15px; border: 1px solid #ccc; border-radius: 8px; margin: 15px 0; background: white;"></div>
+                                    <div id="card-errors" role="alert" style="color: red; margin: 10px 0; font-size: 14px;"></div>
+                                </div>
+                                
+                                <div class="payment-actions" style="display: flex; gap: 10px; justify-content: center;">
+                                    <button id="payButton" class="btn btn-primary" onclick="processPayment('${appName}')" style="flex: 1;">
+                                        💳 Pagar $${priceData.price}
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="closePaymentModal()" style="flex: 1;">
+                                        ❌ Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+                await this.initializeStripe();
+                this.cardElement.mount('#card-element');
+
+                this.cardElement.on('change', ({error}) => {
+                    const displayError = document.getElementById('card-errors');
+                    if (error) {
+                        displayError.textContent = error.message;
+                    } else {
+                        displayError.textContent = '';
+                    }
+                });
+            }
+
+            async processPayment(appName) {
+                const payButton = document.getElementById('payButton');
+                const originalText = payButton.innerHTML;
+                
+                try {
+                    payButton.innerHTML = '⏳ Processando...';
+                    payButton.disabled = true;
+
+                    await this.createPaymentIntent(appName);
+                    const result = await this.confirmPayment();
+
+                    showNotification('✅ Pagamento realizado com sucesso!', 'success');
+                    showNotification(`🔑 Licença: ${result.license.license_key.substring(0, 8)}...`, 'info');
+                    
+                    closePaymentModal();
+
+                } catch (error) {
+                    showNotification(`❌ Erro no pagamento: ${error.message}`, 'error');
+                } finally {
+                    payButton.innerHTML = originalText;
+                    payButton.disabled = false;
+                }
+            }
+        }
+
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            if (modal) modal.remove();
+        }
+
+        function processPayment(appName) {
+            kingPayment.processPayment(appName);
+        }
+
+        const kingPayment = new KingPayment();
+
+        // Funções dos Dashboards
+        function showAdminTab(tabName) {
+            // Remover active de todas as abas
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Ativar aba selecionada
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Carregar dados específicos da aba
+            if (tabName === 'users') loadUsers();
+            else if (tabName === 'licenses') loadLicenses();
+            else if (tabName === 'invites') loadInvites();
+            else if (tabName === 'analytics') loadAnalytics();
+        }
+
+        function closeAdminDashboard() {
+            const modal = document.getElementById('adminDashboard');
+            if (modal) modal.remove();
+        }
+
+        function closeTesterDashboard() {
+            const modal = document.getElementById('testerDashboard');
+            if (modal) modal.remove();
+        }
+
+        async function loadAdminData() {
+            // Configurar event listeners
+            document.getElementById('apkUploadForm').addEventListener('submit', handleAPKUpload);
+            document.getElementById('inviteForm').addEventListener('submit', handleInviteSubmit);
+            
+            // Carregar dados iniciais
+            loadUsers();
+        }
+
+        async function loadTesterData() {
+            document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackSubmit);
+            loadTesterApps();
+        }
+
+        async function handleAPKUpload(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            const fileInput = document.getElementById('apkFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showNotification('❌ Selecione um arquivo APK', 'error');
+                return;
+            }
+            
+            // Adicionar dados do formulário
+            formData.append('file', file);
+            formData.append('app_name', document.getElementById('appName').value);
+            formData.append('version', document.getElementById('version').value);
+            formData.append('version_code', document.getElementById('versionCode').value);
+            formData.append('min_android_version', document.getElementById('minAndroid').value);
+            formData.append('status', document.getElementById('appStatus').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('changelog', document.getElementById('changelog').value);
+            
+            try {
+                const response = await fetch('http://localhost:5001/api/admin/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('✅ APK enviado com sucesso!', 'success');
+                    document.getElementById('apkUploadForm').reset();
+                } else {
+                    showNotification(`❌ Erro: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Erro de conexão: ${error.message}`, 'error');
+            }
+        }
+
+        async function handleInviteSubmit(event) {
+            event.preventDefault();
+            
+            const inviteData = {
+                email: document.getElementById('inviteEmail').value,
+                type: document.getElementById('inviteType').value,
+                validity_days: document.getElementById('inviteValidity').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:5001/api/admin/invites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(inviteData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('✅ Convite enviado com sucesso!', 'success');
+                    document.getElementById('inviteForm').reset();
+                    loadInvites();
+                } else {
+                    showNotification(`❌ Erro: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Erro de conexão: ${error.message}`, 'error');
+            }
+        }
+
+        async function handleFeedbackSubmit(event) {
+            event.preventDefault();
+            
+            const feedbackData = {
+                app_name: document.getElementById('feedbackApp').value,
+                rating: document.getElementById('feedbackRating').value,
+                type: document.getElementById('feedbackType').value,
+                feedback: document.getElementById('feedbackText').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:5001/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('✅ Feedback enviado com sucesso!', 'success');
+                    document.getElementById('feedbackForm').reset();
+                } else {
+                    showNotification(`❌ Erro: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Erro de conexão: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const response = await fetch('http://localhost:5001/api/users');
+                const users = await response.json();
+                
+                const usersList = document.getElementById('usersList');
+                if (!usersList) return;
+                
+                usersList.innerHTML = users.map(user => `
+                    <div class="user-card">
+                        <h4>👤 ${user.username}</h4>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Tipo:</strong> ${user.user_type}</p>
+                        <p><strong>Status:</strong> <span class="status-badge ${user.is_active ? 'status-active' : 'status-inactive'}">${user.is_active ? 'Ativo' : 'Inativo'}</span></p>
+                        <p><strong>Criado:</strong> ${new Date(user.created_at).toLocaleDateString()}</p>
+                        <div>
+                            <button class="btn btn-small" onclick="toggleUserStatus(${user.id}, ${!user.is_active})">
+                                ${user.is_active ? '🚫 Desativar' : '✅ Ativar'}
+                            </button>
+                            <button class="btn btn-small" onclick="resetUserPassword(${user.id})">🔄 Reset Senha</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                document.getElementById('usersList').innerHTML = '❌ Erro ao carregar usuários';
+            }
+        }
+
+        async function loadLicenses() {
+            try {
+                const response = await fetch('http://localhost:5001/api/admin/licenses');
+                const result = await response.json();
+                
+                const licensesList = document.getElementById('licensesList');
+                if (!licensesList) return;
+                
+                if (result.success) {
+                    licensesList.innerHTML = result.licenses.map(license => `
+                        <div class="license-card">
+                            <h4>🔑 ${license.app_name}</h4>
+                            <p><strong>Usuário:</strong> ${license.user_email}</p>
+                            <p><strong>Chave:</strong> <code>${license.license_key}</code></p>
+                            <p><strong>Status:</strong> <span class="status-badge ${license.is_valid ? 'status-active' : 'status-inactive'}">${license.is_valid ? 'Válida' : 'Inválida'}</span></p>
+                            <p><strong>Expira:</strong> ${license.expires_at ? new Date(license.expires_at).toLocaleDateString() : 'Nunca'}</p>
+                            <div>
+                                <button class="btn btn-small" onclick="revokeLicense('${license.license_key}')">🚫 Revogar</button>
+                                <button class="btn btn-small" onclick="extendLicense('${license.license_key}')">⏰ Estender</button>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    licensesList.innerHTML = '❌ Erro ao carregar licenças';
+                }
+            } catch (error) {
+                document.getElementById('licensesList').innerHTML = '❌ Erro ao carregar licenças';
+            }
+        }
+
+        async function loadInvites() {
+            const invitesList = document.getElementById('invitesList');
+            if (!invitesList) return;
+            
+            invitesList.innerHTML = `
+                <div class="invite-card">
+                    <h4>📧 Sistema de Convites</h4>
+                    <p>Funcionalidade em desenvolvimento. Em breve você poderá:</p>
+                    <ul>
+                        <li>✅ Enviar convites por email</li>
+                        <li>✅ Gerenciar convites pendentes</li>
+                        <li>✅ Definir permissões específicas</li>
+                        <li>✅ Rastrear uso de convites</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        async function loadAnalytics() {
+            const analyticsData = document.getElementById('analyticsData');
+            if (!analyticsData) return;
+            
+            analyticsData.innerHTML = `
+                <div class="user-card">
+                    <h4>📊 Estatísticas do Sistema</h4>
+                    <p><strong>Total de Usuários:</strong> <span id="totalUsers">Carregando...</span></p>
+                    <p><strong>Licenças Ativas:</strong> <span id="activeLicenses">Carregando...</span></p>
+                    <p><strong>Downloads Hoje:</strong> <span id="todayDownloads">Carregando...</span></p>
+                    <p><strong>Receita Total:</strong> <span id="totalRevenue">Carregando...</span></p>
+                </div>
+            `;
+            
+            // Carregar estatísticas reais
+            try {
+                const response = await fetch('http://localhost:5001/api/users');
+                const users = await response.json();
+                document.getElementById('totalUsers').textContent = users.length;
+            } catch (error) {
+                document.getElementById('totalUsers').textContent = 'Erro';
+            }
+        }
+
+        async function loadTesterApps() {
+            const testerApps = document.getElementById('testerApps');
+            if (!testerApps) return;
+            
+            testerApps.innerHTML = `
+                <div class="user-card">
+                    <h4>🗺️ KingRoad</h4>
+                    <p><strong>Versão:</strong> 1.0.0 Beta</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-pending">Em Teste</span></p>
+                    <button class="btn btn-small">📱 Download</button>
+                </div>
+                <div class="user-card">
+                    <h4>🎵 KingMusic</h4>
+                    <p><strong>Versão:</strong> 0.9.5 Alpha</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-pending">Em Teste</span></p>
+                    <button class="btn btn-small">📱 Download</button>
+                </div>
+            `;
+        }
+
+        window.KingGroup = { auth: kingAuth, apk: kingAPK, payment: kingPayment, showNotification, downloadApp };
+        console.log('🔗 Sistema de integração KingGroup carregado com sucesso!');
+    </script>
 </body>
 </html>
