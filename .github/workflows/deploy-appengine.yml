@@ -1,0 +1,31 @@
+name: Deploy to Google App Engine
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Google Cloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: kinggroup-website
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+    
+    - name: Deploy to App Engine
+      run: |
+        gcloud app deploy app.yaml --quiet --promote
+        
+    - name: Verify deployment
+      run: |
+        echo "✅ Deploy realizado com sucesso!"
+        echo "🌐 Site disponível em: https://kinggroup-website.uc.r.appspot.com"
+
