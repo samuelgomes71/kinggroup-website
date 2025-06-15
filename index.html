@@ -1,1 +1,777 @@
-🚀
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingGroup - Portal Oficial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #d4af37 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+        }
+
+        .brand-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #1a1a1a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+        }
+
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 2rem 0;
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #1a1a1a;
+        }
+
+        .content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .app-card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #d4af37;
+        }
+
+        .app-subtitle {
+            color: #cccccc;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .app-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .status-ready {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-development {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .app-description {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #d4af37;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #d4af37;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.25rem;
+        }
+
+        .login-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-tab.active {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #1a1a1a;
+        }
+
+        .forgot-password {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">K</div>
+                <span class="brand-text">KingGroup</span>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary" onclick="openLoginModal()">🔐 Login</a>
+                <a href="#" class="btn btn-primary">📱 Explorar Apps</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="#" class="active">📱 Explorar Apps</a></li>
+                    <li><a href="#" onclick="openLoginModal('admin')">⚙️ Admin</a></li>
+                    <li><a href="#" onclick="openLoginModal('testador')">🧪 Testador</a></li>
+                    <li><a href="#">ℹ️ Saiba Mais</a></li>
+                    <li><a href="#">📞 Contato</a></li>
+                    <li><a href="#">🌍 Idiomas</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <h1>Família King - Aplicativos Revolucionários</h1>
+            <p>Descubra nossa coleção de aplicativos inovadores desenvolvidos para transformar sua experiência digital.</p>
+
+            <div class="apps-grid">
+                <div class="app-card">
+                    <div class="app-icon">🗺️</div>
+                    <h3 class="app-title">KingRoad</h3>
+                    <p class="app-subtitle">GPS Inteligente</p>
+                    <div class="app-status status-ready">✅ Pronto para uso</div>
+                    <p class="app-description">Sistema de navegação revolucionário para caminhões com mapas offline, rotas otimizadas e visão noturna avançada.</p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary" onclick="downloadApp('kingroad')">📱 Download</a>
+                        <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">🎵</div>
+                    <h3 class="app-title">KingMusic</h3>
+                    <p class="app-subtitle">Player Musical</p>
+                    <div class="app-status status-development">🔧 Em desenvolvimento</div>
+                    <p class="app-description">Player avançado com scanner de partituras, OCR musical e reconhecimento de manuscritos musicais.</p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary" onclick="downloadApp('kingmusic')">📱 Download</a>
+                        <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">📖</div>
+                    <h3 class="app-title">KingHinário CCB</h3>
+                    <p class="app-subtitle">Hinários Digitais</p>
+                    <div class="app-status status-development">🔧 Em desenvolvimento</div>
+                    <p class="app-description">Hinários digitais da CCB com busca avançada, detecção de voz e sincronização automática.</p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary" onclick="downloadApp('kinghinario')">📱 Download</a>
+                        <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">💼</div>
+                    <h3 class="app-title">KingJob</h3>
+                    <p class="app-subtitle">Plataforma de Empregos</p>
+                    <div class="app-status status-development">🔧 Em desenvolvimento</div>
+                    <p class="app-description">Plataforma completa para busca de empregos com foco em motoristas e sistema de selfie profissional.</p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary" onclick="downloadApp('kingjob')">📱 Download</a>
+                        <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">🎸</div>
+                    <h3 class="app-title">KingTuner</h3>
+                    <p class="app-subtitle">Afinador Musical</p>
+                    <div class="app-status status-development">🔧 Em desenvolvimento</div>
+                    <p class="app-description">Afinador cromático profissional com metrônomo integrado e suporte para múltiplos instrumentos.</p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary" onclick="downloadApp('kingtuner')">📱 Download</a>
+                        <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">📱</div>
+                    <h3 class="app-title">KingScan</h3>
+                    <p class="app-subtitle">Scanner Inteligente</p>
+                    <div class="app-status status-development">🔧 Em desenvolvimento</div>
+                    <p class="app-description">Scanner inteligente com IA avançada, OCR profissional e reconhecimento de partituras musicais.</p>
+                    <div class="app-actions">
+                        <a href="#" class="btn btn-primary" onclick="downloadApp('kingscan')">📱 Download</a>
+                        <a href="#" class="btn btn-secondary">ℹ️ Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Acesso ao Sistema</h2>
+                <button class="close-btn" onclick="closeLoginModal()">&times;</button>
+            </div>
+
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchTab('admin')">👑 Administrador</button>
+                <button class="login-tab" onclick="switchTab('testador')">🧪 Testador</button>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Usuário/Email:</label>
+                    <input type="text" class="form-input" id="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Senha:</label>
+                    <div class="password-field">
+                        <input type="password" class="form-input" id="password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    🔐 Entrar
+                </button>
+
+                <a href="#" class="forgot-password" onclick="openForgotPassword()">
+                    🔄 Esqueci minha senha
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Esqueci Senha -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Recuperar Senha</h2>
+                <button class="close-btn" onclick="closeForgotPasswordModal()">&times;</button>
+            </div>
+
+            <form id="forgotPasswordForm">
+                <div class="form-group">
+                    <label class="form-label">Email ou Usuário:</label>
+                    <input type="text" class="form-input" id="forgotEmail" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    📧 Enviar Código de Recuperação
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Configuração do backend
+        const BACKEND_URL = 'http://127.0.0.1:5001';
+        
+        let currentTab = 'admin';
+        let authToken = null;
+
+        // Sistema de Login
+        function openLoginModal(tab = 'admin') {
+            currentTab = tab;
+            document.getElementById('loginModal').style.display = 'block';
+            switchTab(tab);
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const tabs = document.querySelectorAll('.login-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'admin') {
+                tabs[0].classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+            }
+        }
+
+        // Toggle de senha
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordField.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        // Sistema "Esqueci minha senha"
+        function openForgotPassword() {
+            closeLoginModal();
+            document.getElementById('forgotPasswordModal').style.display = 'block';
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+        }
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        user_type: currentTab
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    authToken = data.token;
+                    alert(`✅ Login realizado com sucesso como ${currentTab}!`);
+                    closeLoginModal();
+                    
+                    if (currentTab === 'admin') {
+                        showAdminDashboard();
+                    } else {
+                        showTestadorDashboard();
+                    }
+                } else {
+                    alert(`❌ Erro no login: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Erro de conexão: ${error.message}`);
+            }
+        });
+
+        // Recuperação de senha
+        document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('forgotEmail').value;
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ Código de recuperação enviado para seu email!');
+                    closeForgotPasswordModal();
+                } else {
+                    alert(`❌ Erro: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Erro de conexão: ${error.message}`);
+            }
+        });
+
+        // Download de APK
+        async function downloadApp(appName) {
+            if (!authToken) {
+                alert('⚠️ Faça login para baixar os aplicativos');
+                openLoginModal();
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/apps/${appName}/download`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${appName}.apk`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    
+                    alert(`✅ Download do ${appName} iniciado!`);
+                } else {
+                    alert('❌ Erro no download. Tente novamente.');
+                }
+            } catch (error) {
+                alert(`❌ Erro de conexão: ${error.message}`);
+            }
+        }
+
+        // Dashboard Admin
+        function showAdminDashboard() {
+            // Implementar dashboard administrativo
+            console.log('Mostrando dashboard admin');
+        }
+
+        // Dashboard Testador
+        function showTestadorDashboard() {
+            // Implementar dashboard de testador
+            console.log('Mostrando dashboard testador');
+        }
+
+        // Fechar modais clicando fora
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const forgotModal = document.getElementById('forgotPasswordModal');
+            
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+            if (event.target === forgotModal) {
+                closeForgotPasswordModal();
+            }
+        }
+
+        // Carregar sistema de logos adaptativos
+        document.addEventListener('DOMContentLoaded', () => {
+            // Aplicar logos adaptativos se disponível
+            if (typeof adaptiveLogoSystem !== 'undefined') {
+                const logoElements = document.querySelectorAll('.adaptive-logo');
+                logoElements.forEach((element, index) => {
+                    adaptiveLogoSystem.applyToElement(element.id || `adaptive-logo-${index}`);
+                });
+            }
+        });
+    </script>
+
+    <!-- Sistema de logos adaptativos -->
+    <script src="assets/js/adaptive-logo-system.js"></script>
+</body>
+</html>
