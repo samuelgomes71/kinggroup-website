@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingGroup - Família King de Aplicativos</title>
+    <meta name="description" content="KingGroup - A família completa de aplicativos King para facilitar sua vida. GPS, Música, Hinário, Empregos e muito mais!">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .crown {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .app-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        .app-status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .status-ready {
+            background: #e8f5e8;
+            color: #2d5a2d;
+        }
+
+        .status-development {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header .crown {
+                font-size: 3rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .app-card {
+                padding: 20px;
+            }
+            
+            .app-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .app-card:nth-child(1) { animation-delay: 0.1s; }
+        .app-card:nth-child(2) { animation-delay: 0.2s; }
+        .app-card:nth-child(3) { animation-delay: 0.3s; }
+        .app-card:nth-child(4) { animation-delay: 0.4s; }
+        .app-card:nth-child(5) { animation-delay: 0.5s; }
+        .app-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <span class="crown">👑</span>
+            <h1>KingGroup</h1>
+            <p>A família completa de aplicativos King para facilitar sua vida digital</p>
+        </header>
+
+        <main class="apps-grid">
+            <!-- KingRoad - GPS Inteligente -->
+            <div class="app-card">
+                <span class="app-icon">🗺️</span>
+                <h2 class="app-title">KingRoad</h2>
+                <span class="app-status status-ready">✅ Pronto para uso</span>
+                <p class="app-description">
+                    Sistema de navegação GPS inteligente com rotas otimizadas, alertas de trânsito em tempo real e interface intuitiva. Chegue ao seu destino de forma rápida e segura.
+                </p>
+                <div class="app-buttons">
+                    <a href="#" class="btn btn-primary" onclick="downloadApp('KingRoad')">📱 Download</a>
+                    <a href="#" class="btn btn-secondary" onclick="showDetails('KingRoad')">ℹ️ Detalhes</a>
+                </div>
+            </div>
+
+            <!-- KingMusic - Player Musical -->
+            <div class="app-card">
+                <span class="app-icon">🎵</span>
+                <h2 class="app-title">KingMusic</h2>
+                <span class="app-status status-development">🚧 Em desenvolvimento</span>
+                <p class="app-description">
+                    Player de música avançado com equalização profissional, suporte a múltiplos formatos e sincronização em nuvem. Sua música, do seu jeito.
+                </p>
+                <div class="app-buttons">
+                    <a href="#" class="btn btn-secondary" onclick="notifyWhenReady('KingMusic')">🔔 Notificar quando pronto</a>
+                    <a href="#" class="btn btn-secondary" onclick="showDetails('KingMusic')">ℹ️ Detalhes</a>
+                </div>
+            </div>
+
+            <!-- KingHinário CCB -->
+            <div class="app-card">
+                <span class="app-icon">📖</span>
+                <h2 class="app-title">KingHinário CCB</h2>
+                <span class="app-status status-development">🚧 Em desenvolvimento</span>
+                <p class="app-description">
+                    Hinário digital da Congregação Cristã no Brasil com busca avançada, favoritos, histórico e modo offline. Louve com praticidade.
+                </p>
+                <div class="app-buttons">
+                    <a href="#" class="btn btn-secondary" onclick="notifyWhenReady('KingHinario')">🔔 Notificar quando pronto</a>
+                    <a href="#" class="btn btn-secondary" onclick="showDetails('KingHinario')">ℹ️ Detalhes</a>
+                </div>
+            </div>
+
+            <!-- KingJob - Plataforma de Empregos -->
+            <div class="app-card">
+                <span class="app-icon">💼</span>
+                <h2 class="app-title">KingJob</h2>
+                <span class="app-status status-development">🚧 Em desenvolvimento</span>
+                <p class="app-description">
+                    Plataforma completa para busca de empregos com filtros inteligentes, alertas personalizados e conexão direta com recrutadores.
+                </p>
+                <div class="app-buttons">
+                    <a href="#" class="btn btn-secondary" onclick="notifyWhenReady('KingJob')">🔔 Notificar quando pronto</a>
+                    <a href="#" class="btn btn-secondary" onclick="showDetails('KingJob')">ℹ️ Detalhes</a>
+                </div>
+            </div>
+
+            <!-- KingTuner - Afinador Musical -->
+            <div class="app-card">
+                <span class="app-icon">🎸</span>
+                <h2 class="app-title">KingTuner</h2>
+                <span class="app-status status-development">🚧 Em desenvolvimento</span>
+                <p class="app-description">
+                    Afinador musical profissional para instrumentos de corda e sopro, com precisão de estúdio e interface amigável para músicos.
+                </p>
+                <div class="app-buttons">
+                    <a href="#" class="btn btn-secondary" onclick="notifyWhenReady('KingTuner')">🔔 Notificar quando pronto</a>
+                    <a href="#" class="btn btn-secondary" onclick="showDetails('KingTuner')">ℹ️ Detalhes</a>
+                </div>
+            </div>
+
+            <!-- KingScan - Scanner Inteligente -->
+            <div class="app-card">
+                <span class="app-icon">📱</span>
+                <h2 class="app-title">KingScan</h2>
+                <span class="app-status status-development">🚧 Em desenvolvimento</span>
+                <p class="app-description">
+                    Scanner inteligente de documentos e QR codes com OCR avançado, organização automática e compartilhamento seguro.
+                </p>
+                <div class="app-buttons">
+                    <a href="#" class="btn btn-secondary" onclick="notifyWhenReady('KingScan')">🔔 Notificar quando pronto</a>
+                    <a href="#" class="btn btn-secondary" onclick="showDetails('KingScan')">ℹ️ Detalhes</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <h3>🏰 Família King</h3>
+            <p>Desenvolvendo soluções digitais de qualidade</p>
+            <p>© 2025 KingGroup. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="mailto:contato@kinggroup.dev">📧 Contato</a>
+                <a href="#" onclick="showSupport()">🛠️ Suporte</a>
+                <a href="#" onclick="showPrivacy()">🔒 Privacidade</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Funções interativas
+        function downloadApp(appName) {
+            if (appName === 'KingRoad') {
+                alert('🎉 KingRoad está pronto! O download será iniciado em breve.');
+                // Aqui seria o link real de download
+            } else {
+                alert('📱 ' + appName + ' ainda está em desenvolvimento. Use "Notificar quando pronto" para ser avisado!');
+            }
+        }
+
+        function showDetails(appName) {
+            const details = {
+                'KingRoad': 'GPS inteligente com navegação offline, alertas de trânsito, rotas otimizadas e interface moderna.',
+                'KingMusic': 'Player musical com equalização de 10 bandas, suporte a FLAC/MP3/AAC, playlists inteligentes.',
+                'KingHinario': 'Hinário CCB completo com busca por número/título, favoritos, histórico e modo noturno.',
+                'KingJob': 'Plataforma de empregos com filtros avançados, CV builder e conexão com LinkedIn.',
+                'KingTuner': 'Afinador cromático para violão, guitarra, baixo, violino e instrumentos de sopro.',
+                'KingScan': 'Scanner com OCR em português, detecção automática de bordas e organização por pastas.'
+            };
+            
+            alert('📋 ' + appName + '\n\n' + details[appName]);
+        }
+
+        function notifyWhenReady(appName) {
+            const email = prompt('📧 Digite seu email para ser notificado quando ' + appName + ' estiver pronto:');
+            if (email && email.includes('@')) {
+                alert('✅ Perfeito! Você será notificado em ' + email + ' quando ' + appName + ' estiver disponível.');
+                // Aqui seria enviado para um sistema de notificações
+            } else if (email) {
+                alert('❌ Email inválido. Tente novamente.');
+            }
+        }
+
+        function showSupport() {
+            alert('🛠️ Suporte KingGroup\n\n📧 Email: suporte@kinggroup.dev\n📱 WhatsApp: Em breve\n🕐 Horário: 8h às 18h (seg-sex)');
+        }
+
+        function showPrivacy() {
+            alert('🔒 Política de Privacidade\n\nA KingGroup respeita sua privacidade. Não coletamos dados pessoais sem consentimento e não compartilhamos informações com terceiros.\n\nPara mais detalhes, acesse: kinggroup.dev/privacidade');
+        }
+
+        // Animação suave ao carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Efeito de parallax suave no scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            header.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>
+
