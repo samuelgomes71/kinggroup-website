@@ -1,0 +1,15 @@
+runtime: python39
+
+handlers:
+- url: /
+  static_files: index.html
+  upload: index.html
+
+- url: /(.*)
+  static_files: \1
+  upload: (.*)
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+
