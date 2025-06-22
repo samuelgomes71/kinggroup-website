@@ -1,0 +1,51 @@
+name: 🚀 Deploy KingGroup to Firebase
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install Dependencies
+      run: |
+        npm install -g firebase-tools
+        
+    - name: 🔐 Authenticate Firebase
+      run: |
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase-key.json
+        export GOOGLE_APPLICATION_CREDENTIALS=firebase-key.json
+        
+    - name: 🏗️ Build Project
+      run: |
+        echo "✅ Project ready for deployment"
+        ls -la
+        
+    - name: 🚀 Deploy to Firebase Hosting
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=firebase-key.json
+        firebase deploy --only hosting --project kinggrouptech-93908 --non-interactive
+        
+    - name: 🧹 Cleanup
+      run: |
+        rm -f firebase-key.json
+        
+    - name: ✅ Deployment Success
+      run: |
+        echo "🎉 KingGroup deployed successfully!"
+        echo "🌐 Site: https://kinggrouptech.com"
+        echo "🔥 Firebase: https://kinggrouptech-93908.web.app"
+
