@@ -7,10 +7,6 @@ env_variables:
   APP_URL: https://app.kinggrouptech.com
 
 handlers:
-- url: /api/.*
-  script: auto
-  secure: always
-
 - url: /.*
   script: auto
   secure: always
