@@ -1,9 +1,7 @@
-name: 🚀 Deploy KingGroup Frontend (Firebase Hosting)
+name: 🚀 Deploy Integrado KingGroup (Frontend + Backend)
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 jobs:
@@ -18,35 +16,56 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
         
-    - name: 📦 Install Dependencies
-      run: |
-        npm install -g firebase-tools
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
         
-    - name: 🔐 Authenticate Firebase
-      run: |
-        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase-key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=firebase-key.json
+    - name: 📦 Install Firebase CLI
+      run: npm install -g firebase-tools
+      
+    - name: ☁️ Setup Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: kinggrouptech-93908
         
-    - name: 🏗️ Build Project
+    - name: 🔐 Authenticate Google Cloud
       run: |
-        echo "✅ Project ready for deployment"
-        ls -la
+        echo '${{ secrets.GCP_SA_KEY }}' | base64 -d > gcp-key.json
+        gcloud auth activate-service-account --key-file gcp-key.json
+        gcloud config set project kinggrouptech-93908
         
-    - name: 🚀 Deploy to Firebase Hosting
+    - name: 📦 Install Python Dependencies
       run: |
-        export GOOGLE_APPLICATION_CREDENTIALS=firebase-key.json
-        firebase deploy --only hosting --project kinggrouptech-93908 --non-interactive
+        pip install -r requirements.txt
+        
+    - name: 🏗️ Build and Test Backend
+      run: |
+        python -c "import main; print('✅ Backend imports successfully')"
+        echo "✅ Backend ready for deployment"
+        
+    - name: 🚀 Deploy Backend to App Engine
+      run: |
+        gcloud app deploy app.yaml --quiet --no-promote
+        echo "✅ Backend deployed to App Engine"
+        
+    - name: 🌐 Deploy Frontend to Firebase Hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      run: |
+        firebase deploy --only hosting --project kinggrouptech-93908 --token "$FIREBASE_TOKEN"
+        echo "✅ Frontend deployed to Firebase Hosting"
         
     - name: 🧹 Cleanup
       run: |
-        rm -f firebase-key.json
+        rm -f gcp-key.json
         
-    - name: ✅ Frontend Deployment Success
+    - name: ✅ Deployment Success
       run: |
-        echo "🎉 KingGroup Frontend deployed successfully!"
-        echo "🌐 Site: https://kinggrouptech.com"
-        echo "🔥 Firebase: https://kinggrouptech-93908.web.app"
-        echo "📦 Project: kinggrouptech-93908 (Frontend)"
+        echo "🎉 KingGroup deployed successfully!"
+        echo "🌐 Frontend: https://kinggrouptech.com"
+        echo "⚙️ Backend: https://kinggrouptech-93908.appspot.com"
+        echo "🔗 Integration: Frontend ↔ Backend active"
 

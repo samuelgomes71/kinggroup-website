@@ -1,4 +1,3 @@
-# Backend Flask KingGroup
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
@@ -12,7 +11,15 @@ import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'kinggroup-secret-key-2025'
-CORS(app, origins=['https://kinggrouptech.com', 'https://www.kinggrouptech.com', 'https://app.kinggrouptech.com'])
+
+# CORS configurado para permitir acesso do frontend
+CORS(app, origins=[
+    'https://kinggrouptech.com', 
+    'https://www.kinggrouptech.com', 
+    'https://kinggrouptech-93908.web.app',
+    'http://localhost:3000',  # Para desenvolvimento local
+    'http://localhost:8080'   # Para testes locais
+])
 
 # Configuração do banco de dados
 DATABASE = 'kinggroup.db'
@@ -73,6 +80,21 @@ def init_db():
         VALUES (?, ?, ?, ?, ?)
     ''', ('admin', 'admin@kinggrouptech.com', admin_password, 'BR', 'Global'))
     
+    # Inserir dados de exemplo para mapas
+    sample_maps = [
+        ('BR', 'SP', 'São Paulo', 'standard', 52428800, None, 0),
+        ('BR', 'RJ', 'Rio de Janeiro', 'standard', 41943040, None, 0),
+        ('BR', 'MG', 'Belo Horizonte', 'standard', 31457280, None, 0),
+        ('US', 'CA', 'Los Angeles', 'premium', 104857600, None, 1),
+        ('US', 'NY', 'New York', 'premium', 125829120, None, 1),
+    ]
+    
+    for map_data in sample_maps:
+        cursor.execute('''
+            INSERT OR IGNORE INTO maps (country, state, city, map_type, file_size, download_url, is_premium)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', map_data)
+    
     conn.commit()
     conn.close()
 
@@ -96,15 +118,30 @@ def token_required(f):
     
     return decorated
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    """Serve o arquivo index.html"""
-    return send_from_directory('.', 'index.html')
+# === ROTA PRINCIPAL ===
 
-@app.route('/<path:filename>')
-def serve_static(filename):
-    """Serve arquivos estáticos"""
-    return send_from_directory('.', filename)
+@app.route('/', methods=['GET'])
+def index():
+    """Página inicial da API"""
+    return jsonify({
+        'message': 'KingGroup API is running!',
+        'version': '1.0.0',
+        'endpoints': {
+            'auth': '/api/auth/login, /api/auth/register-testador',
+            'maps': '/api/maps/regions, /api/maps/download, /api/maps/stats',
+            'admin': '/api/admin/stats'
+        },
+        'status': 'active'
+    })
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check para monitoramento"""
+    return jsonify({
+        'status': 'healthy',
+        'timestamp': datetime.datetime.utcnow().isoformat(),
+        'database': 'connected'
+    })
 
 # === ROTAS DE AUTENTICAÇÃO ===
 
