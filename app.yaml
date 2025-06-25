@@ -1,10 +1,26 @@
 runtime: python39
 
+# Cloud SQL PostgreSQL Configuration
+beta_settings:
+  cloud_sql_instances: kinggrouptech-93908:us-central1:kinggroup-db
+
 env_variables:
+  # Domain Configuration
   DOMAIN: kinggrouptech.com
   API_URL: https://kinggrouptech-93908.appspot.com
   WEB_URL: https://kinggrouptech.com
   APP_URL: https://app.kinggrouptech.com
+  
+  # Cloud SQL Database Configuration
+  DB_USER: kinggroup_user
+  DB_PASS: KingGroup2025Secure!
+  DB_NAME: kinggroup_db
+  CLOUD_SQL_CONNECTION_NAME: kinggrouptech-93908:us-central1:kinggroup-db
+  
+  # Application Configuration
+  FLASK_ENV: production
+  SECRET_KEY: KingGroup2025SecretKey!
+  JWT_SECRET_KEY: KingGroupJWT2025SecureToken!
 
 handlers:
 - url: /.*
@@ -12,13 +28,13 @@ handlers:
   secure: always
 
 automatic_scaling:
-  min_instances: 0
+  min_instances: 1
   max_instances: 10
   target_cpu_utilization: 0.6
 
 resources:
   cpu: 1
-  memory_gb: 0.5
+  memory_gb: 1.0
   disk_size_gb: 10
 
 network:
