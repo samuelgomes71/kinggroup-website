@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Administrativo Simples - Família King</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #fdfdfd; }
+    h1 { color: #703d00; }
+    button { margin: 10px 10px 10px 0; padding: 10px 15px; background: #c0935c; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    pre { background: #f4f4f4; padding: 15px; border-radius: 5px; max-height: 500px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>📊 Painel Administrativo - Família King</h1>
+  <p>Clique em um botão para carregar os dados:</p>
+  <button onclick="carregarJSON('analytics.json')">📈 Ver Analytics</button>
+  <button onclick="carregarJSON('apis.json')">🔌 Ver APIs</button>
+  <button onclick="carregarJSON('mapa_de_calor.json')">🔥 Ver Mapa de Calor</button>
+
+  <h2>Resultado:</h2>
+  <pre id="saida">Clique em um dos botões acima para carregar os dados...</pre>
+
+  <script>
+    function carregarJSON(nomeArquivo) {
+      fetch('/configs/' + nomeArquivo)
+        .then(res => {
+          if (!res.ok) throw new Error("Arquivo não encontrado");
+          return res.json();
+        })
+        .then(dados => {
+          document.getElementById("saida").textContent = JSON.stringify(dados, null, 2);
+        })
+        .catch(erro => {
+          document.getElementById("saida").textContent = "Erro ao carregar o JSON: " + erro;
+        });
+    }
+  </script>
+</body>
+</html>

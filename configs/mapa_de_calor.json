@@ -1,0 +1,30 @@
+{
+  "mapaDeCalor": {
+    "id": "mapa_interativo_king",
+    "modo": "ativo",
+    "atualização": "em tempo real",
+    "camadasDisponiveis": [
+      "downloadPorRegiao",
+      "usoAtivo",
+      "licencasPorTipo",
+      "zonaDeMaiorAdesao",
+      "desinstalacoes"
+    ],
+    "interação": {
+      "clique": "exibe detalhes por região",
+      "hover": "exibe resumo rápido"
+    },
+    "exportação": {
+      "formatos": [
+        "png",
+        "csv",
+        "pdf"
+      ],
+      "opções": [
+        "por país",
+        "por data",
+        "por app"
+      ]
+    }
+  }
+}

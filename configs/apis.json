@@ -1,0 +1,39 @@
+{
+  "apisIntegradas": {
+    "Firebase": {
+      "função": "Hospedagem, autenticação, analytics, Firestore",
+      "coleçõesPrincipais": [
+        "usuarios",
+        "licencas",
+        "usoPorRegiao",
+        "feedbacks"
+      ]
+    },
+    "GoogleMapsAPI": {
+      "função": "Mapas interativos, rotas e geolocalização",
+      "camadasExtras": [
+        "tráfego em tempo real",
+        "zonas de risco",
+        "restrições de caminhões"
+      ]
+    },
+    "OpenWeatherAPI": {
+      "função": "Condições climáticas nas rotas e regiões dos usuários",
+      "usos": [
+        "exibir condições no mapa",
+        "prevenir alertas de clima severo"
+      ]
+    },
+    "MapboxAPI": {
+      "função": "Suporte alternativo ao Google Maps para mapa offline e personalização visual",
+      "personalização": {
+        "tema": "cores quentes, estilo Família King",
+        "icones": "personalizados para cada app"
+      }
+    },
+    "KingAI": {
+      "função": "Análise de comportamento dos usuários, sugestões de rotas, previsão de engajamento",
+      "modeloBase": "GPT-4 + IA comportamental"
+    }
+  }
+}
