@@ -1,1 +1,54 @@
-
+{
+  "painelAdministrativo": {
+    "analytics": {
+      "descricao": "Painel com gráficos e tabelas interativos sobre o uso dos aplicativos da Família King.",
+      "graficos": [
+        "usuáriosPorPaís",
+        "usuáriosPorRegião",
+        "downloadsPorDia",
+        "usuáriosAtivos",
+        "licençasAtivas",
+        "licençasExpiradas",
+        "comparativoEngajamento",
+        "engajamentoPorApp"
+      ],
+      "mapasInterativos": [
+        {
+          "tipo": "mapaDeCalor",
+          "camadas": [
+            "downloads",
+            "usuáriosAtivos",
+            "engajamento",
+            "regiõesComMaiorUso",
+            "regiõesComMenorUso"
+          ],
+          "legenda": {
+            "verde": "uso alto",
+            "laranja": "uso médio",
+            "vermelho": "uso baixo ou ausente"
+          }
+        }
+      ]
+    },
+    "licencas": {
+      "coresStatus": {
+        "verde": "licença válida",
+        "amarelo": "expira em até 30 dias",
+        "vermelho": "expirada"
+      },
+      "filtros": [
+        "porPaís",
+        "porRegião",
+        "porTipoDeVeículo",
+        "porPlano"
+      ]
+    },
+    "filtrosAdicionais": [
+      "sexo",
+      "faixaEtária",
+      "tipoDeUsuário",
+      "modoPreferido",
+      "veículoUtilizado"
+    ]
+  }
+}
