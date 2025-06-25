@@ -1,4 +1,4 @@
-name: 🔧 Deploy Backend Only
+name: backend
 
 on:
   push:

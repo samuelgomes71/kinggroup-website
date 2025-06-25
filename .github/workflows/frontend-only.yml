@@ -1,4 +1,4 @@
-name: 🌐 Deploy Frontend Only
+name: frontend
 
 on:
   push:

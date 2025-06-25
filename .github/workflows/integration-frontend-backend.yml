@@ -1,4 +1,4 @@
-name: 🔗 Integração Frontend-Backend
+name: integracao-frontend-backend
 
 on:
   workflow_dispatch:
