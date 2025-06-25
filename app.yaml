@@ -1,0 +1,21 @@
+runtime: python39
+
+env_variables:
+  DOMAIN: kinggrouptech.com
+  API_URL: https://kinggrouptech-93908.appspot.com
+  WEB_URL: https://kinggrouptech.com
+  APP_URL: https://app.kinggrouptech.com
+
+handlers:
+- url: /api/.*
+  script: auto
+  secure: always
+
+- url: /.*
+  script: auto
+  secure: always
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+

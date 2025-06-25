@@ -1,4 +1,4 @@
-name: 🚀 Deploy KingGroup to Firebase
+name: 🚀 Deploy KingGroup Frontend (Firebase Hosting)
 
 on:
   push:
@@ -43,9 +43,10 @@ jobs:
       run: |
         rm -f firebase-key.json
         
-    - name: ✅ Deployment Success
+    - name: ✅ Frontend Deployment Success
       run: |
-        echo "🎉 KingGroup deployed successfully!"
+        echo "🎉 KingGroup Frontend deployed successfully!"
         echo "🌐 Site: https://kinggrouptech.com"
         echo "🔥 Firebase: https://kinggrouptech-93908.web.app"
+        echo "📦 Project: kinggrouptech-93908 (Frontend)"
 

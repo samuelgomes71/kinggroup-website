@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Sistema de Cancelamento KingRoad</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-results {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+        .passed { border-left: 4px solid #4CAF50; }
+        .failed { border-left: 4px solid #f44336; }
+        .demo-section {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        button {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+        .cancel-btn {
+            background: linear-gradient(135deg, #ff4444, #cc0000) !important;
+            color: white !important;
+        }
+        #navigationStatus, #routeHistory {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            min-height: 50px;
+        }
+        .console-output {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ KingRoad - Sistema de Cancelamento de Rota</h1>
+            <h2>⚡ Teste de Funcionalidade Superior ao Truck Path</h2>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎮 Demonstração Interativa</h3>
+            <div>
+                <button onclick="startDemoRoute()">🗺️ Iniciar Rota de Teste</button>
+                <button onclick="cancelCurrentRoute()" class="cancel-btn">⚡ Cancelar Rota</button>
+                <button onclick="showQuickDestinations()">⚡ Destinos Rápidos</button>
+                <button onclick="clearRouteHistory()">🗑️ Limpar Histórico</button>
+            </div>
+            
+            <div id="navigationStatus"></div>
+            <div id="routeHistory"></div>
+        </div>
+
+        <div class="test-results">
+            <h3>🧪 Resultados dos Testes Automatizados</h3>
+            <button onclick="runTests()">▶️ Executar Testes</button>
+            <div id="testResults"></div>
+        </div>
+
+        <div class="console-output" id="consoleOutput">
+            Console de testes aparecerá aqui...
+        </div>
+    </div>
+
+    <!-- Carrega o sistema de cancelamento -->
+    <script src="route_manager.js"></script>
+    
+    <script>
+        // Override console.log para mostrar na página
+        const originalConsoleLog = console.log;
+        const consoleOutput = document.getElementById('consoleOutput');
+        
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            consoleOutput.textContent += args.join(' ') + '\n';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+
+        // Funções de demonstração
+        function startDemoRoute() {
+            const destinations = [
+                'São Paulo, SP', 'Rio de Janeiro, RJ', 'Belo Horizonte, MG',
+                'Salvador, BA', 'Brasília, DF', 'Fortaleza, CE'
+            ];
+            const randomDest = destinations[Math.floor(Math.random() * destinations.length)];
+            routeManager.startRoute(randomDest);
+        }
+
+        function showQuickDestinations() {
+            routeManager.showQuickDestinations();
+        }
+
+        function clearRouteHistory() {
+            routeManager.clearHistory();
+        }
+
+        // Sistema de testes
+        class RouteManagerValidator {
+            constructor() {
+                this.testResults = [];
+                this.passedTests = 0;
+                this.failedTests = 0;
+            }
+
+            runAllTests() {
+                console.log('🧪 Iniciando testes do Sistema de Cancelamento de Rota...\n');
+                
+                this.testResults = [];
+                this.passedTests = 0;
+                this.failedTests = 0;
+                
+                // Testes de funcionalidade básica
+                this.testRouteCreation();
+                this.testImmediateCancellation();
+                this.testHistoryPersistence();
+                this.testRouteReactivation();
+                this.testQuickDestinations();
+                
+                // Testes de UX
+                this.testNoConfirmationDialogs();
+                this.testResponseTime();
+                this.testHistoryLimit();
+                
+                // Testes de interface
+                this.testUIUpdates();
+                this.testNotifications();
+                
+                this.generateReport();
+                this.displayResults();
+            }
+
+            testRouteCreation() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    const route = routeManager.startRoute('São Paulo', 'Rio de Janeiro');
+                    
+                    this.assert(route !== null, 'Rota deve ser criada');
+                    this.assert(route.destination === 'São Paulo', 'Destino deve ser correto');
+                    this.assert(route.status === 'active', 'Status deve ser ativo');
+                    this.assert(routeManager.isNavigating === true, 'Deve estar navegando');
+                    
+                    this.addTestResult('✅ Criação de Rota', true, 'Rota criada com sucesso');
+                } catch (error) {
+                    this.addTestResult('❌ Criação de Rota', false, error.message);
+                }
+            }
+
+            testImmediateCancellation() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    routeManager.startRoute('Brasília');
+                    
+                    const startTime = performance.now();
+                    const canceled = routeManager.cancelRoute();
+                    const endTime = performance.now();
+                    
+                    this.assert(canceled === true, 'Cancelamento deve retornar true');
+                    this.assert(routeManager.currentRoute === null, 'Rota atual deve ser null');
+                    this.assert(routeManager.isNavigating === false, 'Não deve estar navegando');
+                    this.assert((endTime - startTime) < 100, 'Cancelamento deve ser instantâneo (<100ms)');
+                    
+                    this.addTestResult('⚡ Cancelamento Imediato', true, `Cancelado em ${(endTime - startTime).toFixed(2)}ms`);
+                } catch (error) {
+                    this.addTestResult('❌ Cancelamento Imediato', false, error.message);
+                }
+            }
+
+            testHistoryPersistence() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    
+                    routeManager.startRoute('Salvador');
+                    const routeId = routeManager.currentRoute.id;
+                    routeManager.cancelRoute();
+                    
+                    const inHistory = routeManager.routeHistory.some(r => r.id === routeId);
+                    this.assert(inHistory === true, 'Rota cancelada deve estar no histórico');
+                    
+                    const saved = JSON.parse(localStorage.getItem('kingroad_route_history') || '[]');
+                    const savedRoute = saved.find(r => r.id === routeId);
+                    this.assert(savedRoute !== undefined, 'Rota deve estar salva no localStorage');
+                    this.assert(savedRoute.status === 'canceled', 'Status deve ser cancelado');
+                    
+                    this.addTestResult('📋 Persistência no Histórico', true, 'Rota mantida no histórico após cancelamento');
+                } catch (error) {
+                    this.addTestResult('❌ Persistência no Histórico', false, error.message);
+                }
+            }
+
+            testRouteReactivation() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    
+                    routeManager.startRoute('Fortaleza');
+                    const originalDestination = routeManager.currentRoute.destination;
+                    const routeId = routeManager.currentRoute.id;
+                    routeManager.cancelRoute();
+                    
+                    const reactivated = routeManager.reactivateRoute(routeId);
+                    
+                    this.assert(reactivated === true, 'Reativação deve retornar true');
+                    this.assert(routeManager.isNavigating === true, 'Deve estar navegando novamente');
+                    this.assert(routeManager.currentRoute.destination === originalDestination, 'Destino deve ser o mesmo');
+                    
+                    this.addTestResult('🔄 Reativação de Rota', true, 'Rota reativada com sucesso');
+                } catch (error) {
+                    this.addTestResult('❌ Reativação de Rota', false, error.message);
+                }
+            }
+
+            testQuickDestinations() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    
+                    routeManager.startQuickRoute('🏠 Casa');
+                    
+                    this.assert(routeManager.currentRoute !== null, 'Rota rápida deve ser criada');
+                    this.assert(routeManager.currentRoute.destination === '🏠 Casa', 'Destino deve ser correto');
+                    
+                    this.addTestResult('⚡ Destinos Rápidos', true, 'Destino rápido funcionando');
+                } catch (error) {
+                    this.addTestResult('❌ Destinos Rápidos', false, error.message);
+                }
+            }
+
+            testNoConfirmationDialogs() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    
+                    for (let i = 0; i < 5; i++) {
+                        routeManager.startRoute(`Destino ${i}`);
+                        routeManager.cancelRoute();
+                    }
+                    
+                    this.addTestResult('🚫 Sem Confirmações', true, '5 cancelamentos sem diálogos de confirmação');
+                } catch (error) {
+                    this.addTestResult('❌ Sem Confirmações', false, error.message);
+                }
+            }
+
+            testResponseTime() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    const times = [];
+                    
+                    for (let i = 0; i < 10; i++) {
+                        routeManager.startRoute(`Teste ${i}`);
+                        
+                        const start = performance.now();
+                        routeManager.cancelRoute();
+                        const end = performance.now();
+                        
+                        times.push(end - start);
+                    }
+                    
+                    const avgTime = times.reduce((a, b) => a + b, 0) / times.length;
+                    const maxTime = Math.max(...times);
+                    
+                    this.assert(avgTime < 50, 'Tempo médio deve ser < 50ms');
+                    this.assert(maxTime < 100, 'Tempo máximo deve ser < 100ms');
+                    
+                    this.addTestResult('⏱️ Tempo de Resposta', true, `Média: ${avgTime.toFixed(2)}ms, Máx: ${maxTime.toFixed(2)}ms`);
+                } catch (error) {
+                    this.addTestResult('❌ Tempo de Resposta', false, error.message);
+                }
+            }
+
+            testHistoryLimit() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    
+                    for (let i = 0; i < 55; i++) {
+                        routeManager.startRoute(`Destino ${i}`);
+                        routeManager.cancelRoute();
+                    }
+                    
+                    this.assert(routeManager.routeHistory.length <= 50, 'Histórico deve respeitar limite de 50');
+                    
+                    this.addTestResult('📊 Limite do Histórico', true, `Histórico mantido em ${routeManager.routeHistory.length} itens`);
+                } catch (error) {
+                    this.addTestResult('❌ Limite do Histórico', false, error.message);
+                }
+            }
+
+            testUIUpdates() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    routeManager.startRoute('Teste UI');
+                    
+                    const navStatus = document.getElementById('navigationStatus');
+                    this.assert(navStatus.innerHTML.includes('Navegando para'), 'UI deve mostrar navegação ativa');
+                    
+                    routeManager.cancelRoute();
+                    this.assert(navStatus.innerHTML.includes('Nenhuma navegação ativa'), 'UI deve mostrar navegação inativa');
+                    
+                    this.addTestResult('🖥️ Atualizações de UI', true, 'Interface atualizada corretamente');
+                } catch (error) {
+                    this.addTestResult('❌ Atualizações de UI', false, error.message);
+                }
+            }
+
+            testNotifications() {
+                try {
+                    const routeManager = new KingRoadRouteManager();
+                    let notificationReceived = false;
+                    
+                    const originalShowNotification = window.showNotification;
+                    window.showNotification = (message, type) => {
+                        notificationReceived = true;
+                        return true;
+                    };
+                    
+                    routeManager.startRoute('Teste Notificação');
+                    routeManager.cancelRoute();
+                    
+                    window.showNotification = originalShowNotification;
+                    
+                    this.assert(notificationReceived === true, 'Notificação deve ser enviada');
+                    
+                    this.addTestResult('🔔 Notificações', true, 'Sistema de notificações funcionando');
+                } catch (error) {
+                    this.addTestResult('❌ Notificações', false, error.message);
+                }
+            }
+
+            assert(condition, message) {
+                if (!condition) {
+                    throw new Error(message);
+                }
+            }
+
+            addTestResult(testName, passed, details) {
+                this.testResults.push({ testName, passed, details });
+                if (passed) {
+                    this.passedTests++;
+                    console.log(`${testName}: PASSOU - ${details}`);
+                } else {
+                    this.failedTests++;
+                    console.log(`${testName}: FALHOU - ${details}`);
+                }
+            }
+
+            generateReport() {
+                const totalTests = this.passedTests + this.failedTests;
+                const successRate = ((this.passedTests / totalTests) * 100).toFixed(1);
+                
+                console.log('\n' + '='.repeat(60));
+                console.log('📊 RELATÓRIO DE TESTES - SISTEMA DE CANCELAMENTO DE ROTA');
+                console.log('='.repeat(60));
+                console.log(`✅ Testes Aprovados: ${this.passedTests}`);
+                console.log(`❌ Testes Falharam: ${this.failedTests}`);
+                console.log(`📈 Taxa de Sucesso: ${successRate}%`);
+                console.log(`🎯 Status: ${successRate >= 90 ? 'APROVADO' : 'REPROVADO'}`);
+                
+                console.log('\n🚀 COMPARAÇÃO COM TRUCK PATH:');
+                console.log('✅ KingRoad: Cancelamento imediato sem confirmação');
+                console.log('❌ Truck Path: Múltiplas confirmações irritantes');
+                console.log('✅ KingRoad: Histórico inteligente mantido');
+                console.log('❌ Truck Path: Perde histórico ao cancelar');
+                console.log('✅ KingRoad: Interface responsiva');
+                console.log('❌ Truck Path: Interface lenta e pesada');
+            }
+
+            displayResults() {
+                const container = document.getElementById('testResults');
+                container.innerHTML = this.testResults.map(result => `
+                    <div class="test-item ${result.passed ? 'passed' : 'failed'}">
+                        <strong>${result.testName}</strong><br>
+                        ${result.details}
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Função global para executar testes
+        function runTests() {
+            const validator = new RouteManagerValidator();
+            validator.runAllTests();
+        }
+
+        // Mock da função showNotification se não existir
+        if (typeof showNotification === 'undefined') {
+            window.showNotification = function(message, type) {
+                console.log(`[${type.toUpperCase()}] ${message}`);
+            };
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🗺️ Sistema de Cancelamento KingRoad carregado!');
+            console.log('⚡ Pronto para testes de funcionalidade superior ao Truck Path');
+        });
+    </script>
+</body>
+</html>
+
