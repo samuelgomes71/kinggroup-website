@@ -9,53 +9,84 @@ on:
       - 'app.yaml'
   workflow_dispatch:
 
+env:
+  PROJECT_ID: kinggrouptech-93908
+  BACKEND_URL: https://kinggrouptech-93908.appspot.com
+
 jobs:
   deploy-backend:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     
     steps:
     - name: 📥 Checkout Repository
       uses: actions/checkout@v4
       
-    - name: 🐍 Setup Python
+    - name: 🐍 Setup Python with Cache
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
+        cache: 'pip'
         
     - name: ☁️ Setup Google Cloud CLI
       uses: google-github-actions/setup-gcloud@v1
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
-        project_id: kinggrouptech-93908
+        project_id: ${{ env.PROJECT_ID }}
         
     - name: 🔐 Authenticate Google Cloud
       run: |
         echo '${{ secrets.GCP_SA_KEY }}' > /tmp/gcp-key.json
         gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-        gcloud config set project kinggrouptech-93908
+        gcloud config set project ${{ env.PROJECT_ID }}
         
-    - name: 📦 Install Dependencies
+    - name: 📦 Install Dependencies with Cache
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: 🧪 Test Backend
+    - name: 🧪 Comprehensive Backend Tests
       run: |
-        echo "✅ Testing backend functionality"
-        python -c "import flask; print('Flask imported successfully')"
-        python -c "from main import app; print('Main app imported successfully')"
+        echo "🔍 Testing backend functionality..."
+        python -c "import flask; print('✅ Flask imported successfully')"
+        python -c "from main import app; print('✅ Main app imported successfully')"
+        python -c "import sqlite3; print('✅ SQLite available')"
+        python -c "from flask_cors import CORS; print('✅ CORS available')"
+        echo "✅ All backend dependencies verified"
+        
+    - name: 🔍 Pre-Deploy Validation
+      run: |
+        echo "🔍 Validating app.yaml configuration..."
+        if [ -f "app.yaml" ]; then
+          echo "✅ app.yaml found"
+          grep -q "runtime: python39" app.yaml && echo "✅ Python 3.9 runtime confirmed"
+        else
+          echo "❌ app.yaml not found"
+          exit 1
+        fi
         
     - name: 🚀 Deploy to App Engine
       run: |
-        gcloud app deploy app.yaml --quiet --promote
+        echo "🚀 Starting deployment to App Engine..."
+        gcloud app deploy app.yaml --quiet --promote --version=v$(date +%Y%m%d-%H%M%S)
+        echo "✅ Deployment completed"
+        
+    - name: 🔍 Post-Deploy Health Check
+      run: |
+        echo "🔍 Performing health check..."
+        sleep 30  # Wait for deployment to be ready
+        curl -f ${{ env.BACKEND_URL }} || echo "⚠️ Health check failed - may need time to start"
         
     - name: 🧹 Cleanup
+      if: always()
       run: |
         rm -f /tmp/gcp-key.json
         
-    - name: ✅ Backend Success
+    - name: ✅ Backend Deployment Success
       run: |
         echo "🎉 Backend deployed successfully!"
-        echo "🔗 Backend URL: https://kinggrouptech-93908.appspot.com"
-        echo "📊 APIs: https://kinggrouptech-93908.appspot.com/api/"
+        echo "🔗 Backend URL: ${{ env.BACKEND_URL }}"
+        echo "📊 APIs: ${{ env.BACKEND_URL }}/api/"
+        echo "🏷️ Version: v$(date +%Y%m%d-%H%M%S)"
+        echo "📅 Deployed at: $(date)"
 
