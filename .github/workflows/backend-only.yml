@@ -1,12 +1,12 @@
-name: ☁️ Deploy KingGroup Backend (App Engine)
+name: 🔧 Deploy Backend Only
 
 on:
   push:
     branches: [ main ]
     paths:
-      - 'backend/**'
-      - 'app.yaml'
+      - 'main.py'
       - 'requirements.txt'
+      - 'app.yaml'
   workflow_dispatch:
 
 jobs:
@@ -30,8 +30,8 @@ jobs:
         
     - name: 🔐 Authenticate Google Cloud
       run: |
-        echo '${{ secrets.GCP_SA_KEY }}' > gcp-key.json
-        gcloud auth activate-service-account --key-file=gcp-key.json
+        echo '${{ secrets.GCP_SA_KEY }}' > /tmp/gcp-key.json
+        gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
         gcloud config set project kinggrouptech-93908
         
     - name: 📦 Install Dependencies
@@ -41,21 +41,21 @@ jobs:
         
     - name: 🧪 Test Backend
       run: |
-        echo "✅ Backend tests would run here"
+        echo "✅ Testing backend functionality"
         python -c "import flask; print('Flask imported successfully')"
+        python -c "from main import app; print('Main app imported successfully')"
         
     - name: 🚀 Deploy to App Engine
       run: |
-        gcloud app deploy app.yaml --quiet --no-promote
+        gcloud app deploy app.yaml --quiet --promote
         
     - name: 🧹 Cleanup
       run: |
-        rm -f gcp-key.json
+        rm -f /tmp/gcp-key.json
         
-    - name: ✅ Backend Deployment Success
+    - name: ✅ Backend Success
       run: |
-        echo "🎉 KingGroup Backend deployed successfully!"
-        echo "☁️ App Engine: https://kinggrouptech-93908.appspot.com"
-        echo "🔗 APIs: https://kinggrouptech-93908.appspot.com/api/"
-        echo "📦 Project: kinggrouptech-93908 (Backend)"
+        echo "🎉 Backend deployed successfully!"
+        echo "🔗 Backend URL: https://kinggrouptech-93908.appspot.com"
+        echo "📊 APIs: https://kinggrouptech-93908.appspot.com/api/"
 

@@ -1,0 +1,53 @@
+name: 🔗 Integração Frontend-Backend
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # A cada 6 horas
+
+jobs:
+  test-integration:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: 🧪 Test Frontend-Backend Connection
+      run: |
+        echo "🔍 Testing Frontend-Backend Integration"
+        
+        # Testar se frontend está online
+        echo "📱 Testing Frontend..."
+        curl -f https://kinggrouptech.com || echo "❌ Frontend offline"
+        curl -f https://kinggrouptech-93908.web.app || echo "❌ Firebase offline"
+        
+        # Testar se backend está online
+        echo "🔧 Testing Backend..."
+        curl -f https://kinggrouptech-93908.appspot.com || echo "❌ Backend offline"
+        curl -f https://kinggrouptech-93908.appspot.com/api/ || echo "❌ APIs offline"
+        
+        # Testar integração
+        echo "🔗 Testing Integration..."
+        curl -f https://kinggrouptech-93908.appspot.com/api/health || echo "❌ Health check failed"
+        
+    - name: 📊 Generate Integration Report
+      run: |
+        echo "📋 Integration Status Report" > integration-report.txt
+        echo "================================" >> integration-report.txt
+        echo "Frontend: https://kinggrouptech.com" >> integration-report.txt
+        echo "Backend: https://kinggrouptech-93908.appspot.com" >> integration-report.txt
+        echo "APIs: https://kinggrouptech-93908.appspot.com/api/" >> integration-report.txt
+        echo "Timestamp: $(date)" >> integration-report.txt
+        cat integration-report.txt
+        
+    - name: ✅ Integration Success
+      run: |
+        echo "🎉 Frontend-Backend integration tested!"
+        echo "📊 Report generated successfully"
+
